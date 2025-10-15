@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apostila Digital Interativa - Git para QA</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #C084FC 100%);
+            min-height: 100%;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100%;
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            display: flex;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: #4C1D95;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            color: #C084FC;
+            border-bottom: 2px solid #C084FC;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .chapter {
+            margin-bottom: 15px;
+        }
+
+        .chapter-title {
+            background: #6B21A8;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .chapter-title:hover {
+            background: #8B5CF6;
+            transform: translateX(5px);
+        }
+
+        .chapter-title.active {
+            background: #8B5CF6;
+        }
+
+        .subchapters {
+            margin-left: 15px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .subchapter {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            font-size: 14px;
+        }
+
+        .subchapter:hover {
+            background: rgba(139, 92, 246, 0.3);
+        }
+
+        .subchapter.active {
+            background: rgba(139, 92, 246, 0.5);
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page h1 {
+            color: #4C1D95;
+            border-bottom: 3px solid #8B5CF6;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .page h2 {
+            color: #6B21A8;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .interactive-box {
+            background: #F3E8FF;
+            border-left: 4px solid #8B5CF6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .quiz-container {
+            background: #FAF5FF;
+            border: 2px solid #8B5CF6;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .quiz-question {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #4C1D95;
+            font-size: 16px;
+        }
+
+        .quiz-options {
+            margin-bottom: 15px;
+        }
+
+        .quiz-option {
+            display: block;
+            margin: 8px 0;
+            padding: 12px;
+            background: white;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .quiz-option:hover {
+            border-color: #8B5CF6;
+            background: #F3E8FF;
+        }
+
+        .quiz-option.selected {
+            border-color: #8B5CF6;
+            background: #8B5CF6;
+            color: white;
+        }
+
+        .quiz-option.correct {
+            border-color: #27ae60;
+            background: #27ae60;
+            color: white;
+        }
+
+        .quiz-option.incorrect {
+            border-color: #e74c3c;
+            background: #e74c3c;
+            color: white;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .btn {
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #7C3AED;
+        }
+
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            background: #ecf0f1;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #8B5CF6, #C084FC);
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #bdc3c7;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .highlight {
+            background: #DDD6FE;
+            padding: 2px 4px;
+            border-radius: 3px;
+            color: #4C1D95;
+        }
+
+        .example-box {
+            border: 2px dashed #8B5CF6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background: #FAF5FF;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #8B5CF6;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #F3E8FF;
+        }
+
+        .command-table {
+            font-family: 'Courier New', monospace;
+        }
+
+        .command-table td:nth-child(2) {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>📚 Git para QA</h2>
+
+            <div class="chapter">
+                <div class="chapter-title" onclick="toggleChapter('chapter1')">
+                    1. Conceitos Essenciais
+                </div>
+                <div class="subchapters" id="chapter1">
+                    <div class="subchapter" onclick="showPage('boas-vindas')">1.1 Introdução</div>
+                    <div class="subchapter" onclick="showPage('conceitos-essenciais')">1.2 Conceitos Essenciais</div>
+                    <div class="subchapter" onclick="showPage('quiz-conceitos')">1.3 Quiz - Conceitos</div>
+                </div>
+            </div>
+
+            <div class="chapter">
+                <div class="chapter-title" onclick="toggleChapter('chapter2')">
+                    2. Comandos Básicos
+                </div>
+                <div class="subchapters" id="chapter2">
+                    <div class="subchapter" onclick="showPage('comandos-basicos')">2.1 Comandos Essenciais</div>
+                    <div class="subchapter" onclick="showPage('quiz-comandos')">2.2 Quiz - Comandos</div>
+                </div>
+            </div>
+
+            <div class="chapter">
+                <div class="chapter-title" onclick="toggleChapter('chapter3')">
+                    3. Nomenclatura e Commits
+                </div>
+                <div class="subchapters" id="chapter3">
+                    <div class="subchapter" onclick="showPage('nomenclatura-branches')">3.1 Nomenclatura de Branches</div>
+                    <div class="subchapter" onclick="showPage('commits-semanticos')">3.2 Commits Semânticos</div>
+                    <div class="subchapter" onclick="showPage('quiz-nomenclatura')">3.3 Quiz - Nomenclatura</div>
+                </div>
+            </div>
+
+            <div class="chapter">
+                <div class="chapter-title" onclick="toggleChapter('chapter4')">
+                    4. Pull Request e Revisão
+                </div>
+                <div class="subchapters" id="chapter4">
+                    <div class="subchapter" onclick="showPage('pull-request')">4.1 Pull Request</div>
+                    <div class="subchapter" onclick="showPage('revisao-codigo')">4.2 Revisão de Código</div>
+                    <div class="subchapter" onclick="showPage('quiz-pr')">4.3 Quiz - Pull Request</div>
+                </div>
+            </div>
+
+            <div class="chapter">
+                <div class="chapter-title" onclick="toggleChapter('chapter5')">
+                    5. Quiz Final e Recursos
+                </div>
+                <div class="subchapters" id="chapter5">
+                    <div class="subchapter" onclick="showPage('quiz-final')">5.1 Quiz Geral</div>
+                    <div class="subchapter" onclick="showPage('recursos')">5.2 Recursos Adicionais</div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <p style="text-align: center; font-size: 14px;">Progresso: <span id="progressText">0%</span></p>
+        </div>
+
+        <div class="content">
+            <!-- Página Login -->
+            <div class="page active" id="login-page">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh;">
+                    <div style="text-align: center; max-width: 500px;">
+                        <h1 style="color: #4C1D95; margin-bottom: 30px;">📚 Apostila Git para QA</h1>
+
+                        <div style="background: linear-gradient(135deg, #8B5CF6, #C084FC); padding: 40px; border-radius: 20px; color: white; margin-bottom: 30px;">
+                            <h2 style="margin-bottom: 20px; color: white;">Bem-vindo(a)! 👋</h2>
+                            <p style="font-size: 16px; line-height: 1.6;">
+                                Esta é uma apostila interativa de revisão de Git especialmente preparada para profissionais de QA.
+                                Para personalizar sua experiência de aprendizado, por favor, informe seu nome:
+                            </p>
+                        </div>
+
+                        <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #8B5CF6;">
+                            <div style="margin-bottom: 20px;">
+                                <label for="userName" style="display: block; margin-bottom: 8px; font-weight: bold; color: #4C1D95;">
+                                    Como você gostaria de ser chamado(a)?
+                                </label>
+                                <input
+                                    type="text"
+                                    id="userName"
+                                    placeholder="Digite seu nome aqui..."
+                                    style="width: 100%; padding: 12px; border: 2px solid #bdc3c7; border-radius: 8px; font-size: 16px; box-sizing: border-box;"
+                                    onkeypress="if(event.key==='Enter') startApostila()"
+                                >
+                            </div>
+
+                            <button
+                                class="btn"
+                                onclick="startApostila()"
+                                style="width: 100%; padding: 15px; font-size: 18px; background: #8B5CF6;"
+                            >
+                                🚀 Iniciar Apostila
+                            </button>
+                        </div>
+
+                        <div style="margin-top: 20px; padding: 15px; background: #F3E8FF; border-radius: 10px; border-left: 4px solid #8B5CF6;">
+                            <p style="margin: 0; color: #6B21A8; font-size: 14px;">
+                                💡 <strong>Dica:</strong> Seu nome será usado para personalizar feedbacks e relatórios ao longo da apostila!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página Boas-vindas -->
+            <div class="page" id="boas-vindas">
+                <h1>📚 Revisão Git para QA</h1>
+
+                <div style="background: linear-gradient(135deg, #8B5CF6, #C084FC); padding: 20px; border-radius: 15px; color: white; margin-bottom: 25px;">
+                    <h2 style="color: white; margin-bottom: 10px;">Olá, <span id="welcomeUserName">Estudante</span>! 👋</h2>
+                    <p style="margin: 0; font-size: 16px;">Bem-vindo(a) à sua jornada de revisão de Git para profissionais de QA!</p>
+                </div>
+
+                <p>Este material foi preparado especialmente para <strong>profissionais de QA</strong> que já possuem conhecimentos básicos de Git e precisam revisar conceitos importantes no contexto de automação de testes e qualidade de software.</p>
+
+                <p>Este material foi preparado especialmente para <strong>profissionais de QA</strong> que já possuem conhecimentos básicos de Git e precisam revisar conceitos importantes no contexto de automação de testes e qualidade de software.</p>
+
+                <div class="interactive-box">
+                    <h3>🎯 O que vamos revisar</h3>
+                    <ul>
+                        <li><strong>Conceitos essenciais:</strong> Por que cada prática é importante no contexto de QA</li>
+                        <li><strong>Comandos básicos:</strong> Revisão prática dos comandos do dia a dia</li>
+                        <li><strong>Nomenclatura de branches:</strong> Padrões para automação e testes</li>
+                        <li><strong>Commits semânticos:</strong> Facilitando rastreabilidade e CI/CD</li>
+                        <li><strong>Pull Request e revisão:</strong> Garantindo qualidade do código</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>📖 Como usar este material</h4>
+                    <p>Este é um material de <strong>revisão focado em QA</strong>, então:</p>
+                    <ul>
+                        <li>Cada capítulo termina com um quiz interativo</li>
+                        <li>Foque nos pontos específicos para automação de testes</li>
+                        <li>Use como consulta rápida para padrões da equipe</li>
+                        <li>Pratique os comandos em repositórios de teste</li>
+                        <li>Aplique as boas práticas em projetos reais</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-box">
+                    <h3>🚀 Por que Git é essencial para QA?</h3>
+                    <p>Git é fundamental para profissionais de QA porque:</p>
+                    <ul>
+                        <li>Permite versionamento de scripts de automação</li>
+                        <li>Facilita colaboração entre QAs e desenvolvedores</li>
+                        <li>Integra com pipelines de CI/CD para testes</li>
+                        <li>Mantém histórico de mudanças em casos de teste</li>
+                        <li>Permite rollback seguro em caso de problemas</li>
+                    </ul>
+                </div>
+
+                <p style="text-align: center; font-size: 18px; color: #8B5CF6; font-weight: bold;">
+                    Vamos revisar os conceitos essenciais! 🚀
+                </p>
+
+                <div class="navigation">
+                    <button class="btn" disabled>← Anterior</button>
+                    <button class="btn" onclick="showPage('conceitos-essenciais')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Página Conceitos Essenciais -->
+            <div class="page" id="conceitos-essenciais">
+                <h1>🧠 Conceitos Essenciais</h1>
+
+                <p>Mesmo que o grupo já utilize Git, é importante reforçar o <strong>porquê</strong> de cada prática no contexto de QA:</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Conceito</th>
+                                <th>Importância no contexto de QA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Controle de versão</strong></td>
+                                <td>Permite histórico das mudanças e rollback em caso de erro.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Branching</strong></td>
+                                <td>Facilita trabalho paralelo (ex.: novas features, correções, ajustes de automação).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pull Request (PR)</strong></td>
+                                <td>Garante revisão e validação de qualidade antes do merge.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Commits semânticos</strong></td>
+                                <td>Facilitam rastreabilidade e leitura do histórico do repositório.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="interactive-box">
+                    <h3>🔍 Por que isso importa para QA?</h3>
+                    <p><strong>Controle de versão</strong> é especialmente importante quando você está desenvolvendo automação de testes. Se um script quebra após uma mudança, você pode facilmente voltar à versão anterior que funcionava.</p>
+
+                    <p><strong>Branching</strong> permite que diferentes QAs trabalhem em paralelo - um pode estar criando testes para uma nova feature enquanto outro corrige bugs em testes existentes.</p>
+
+                    <p><strong>Pull Requests</strong> garantem que todo código de teste passe por revisão, mantendo a qualidade e compartilhando conhecimento entre a equipe.</p>
+
+                    <p><strong>Commits semânticos</strong> ajudam a entender rapidamente o que mudou, facilitando debugging e manutenção dos testes.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>💡 Exemplo Prático</h4>
+                    <p>Imagine que você está trabalhando em testes automatizados para uma funcionalidade de login:</p>
+                    <ul>
+                        <li>Você cria uma <strong>branch</strong> específica: <code>test/validacoes-login</code></li>
+                        <li>Faz <strong>commits semânticos</strong>: <code>test: adicionar validação de senha inválida</code></li>
+                        <li>Abre um <strong>PR</strong> para revisão da equipe</li>
+                        <li>Se algo der errado, pode fazer <strong>rollback</strong> facilmente</li>
+                    </ul>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('boas-vindas')">← Anterior</button>
+                    <button class="btn" onclick="showPage('quiz-conceitos')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Quiz Conceitos -->
+            <div class="page" id="quiz-conceitos">
+                <h1>🧠 Quiz - Conceitos Essenciais</h1>
+
+                <p>Teste seus conhecimentos sobre os conceitos essenciais do Git no contexto de QA!</p>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">1. Por que o controle de versão é especialmente importante para QA?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 1)">Para conectar com a internet</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'conceitos', 1)">Para ter histórico das mudanças e poder fazer rollback em caso de erro</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 1)">Para criar documentação automaticamente</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 1)">Para executar testes mais rapidamente</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-conceitos-1" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Muito bem, <span class="user-name-feedback">estudante</span>!</strong> O controle de versão permite que você mantenha um histórico completo de todas as mudanças nos seus scripts de automação. Se um teste quebrar após uma alteração, você pode facilmente voltar à versão anterior que funcionava, garantindo estabilidade nos testes.</div>
+                        <div class="incorrect-answer">❌ <strong>Não foi dessa vez, <span class="user-name-feedback">estudante</span>.</strong> O controle de versão é fundamental para manter histórico das mudanças e permitir rollback seguro. Isso é especialmente importante em automação de testes, onde uma mudança pode quebrar vários cenários de teste. Continue estudando!</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">2. Qual é o principal benefício do branching para equipes de QA?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'conceitos', 2)">Facilita trabalho paralelo em diferentes funcionalidades e correções</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 2)">Torna os testes mais rápidos</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 2)">Reduz o tamanho dos arquivos</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 2)">Elimina a necessidade de documentação</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-conceitos-2" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Excelente, <span class="user-name-feedback">estudante</span>!</strong> O branching permite que diferentes QAs trabalhem simultaneamente sem interferir no trabalho uns dos outros. Por exemplo, um QA pode estar criando testes para uma nova feature enquanto outro corrige bugs em testes existentes, tudo em branches separadas.</div>
+                        <div class="incorrect-answer">❌ <strong>Ops, <span class="user-name-feedback">estudante</span>!</strong> O principal benefício do branching é permitir trabalho paralelo. Isso significa que múltiplos QAs podem trabalhar em diferentes funcionalidades, correções ou melhorias simultaneamente, sem conflitos. Vamos revisar esse conceito!</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">3. Por que Pull Requests são importantes no contexto de QA?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 3)">Para acelerar o desenvolvimento</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 3)">Para reduzir o uso de memória</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'conceitos', 3)">Para garantir revisão e validação de qualidade antes do merge</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 3)">Para criar backups automáticos</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-conceitos-3" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> Pull Requests garantem que todo código de teste passe por revisão antes de ser integrado. Isso mantém a qualidade dos testes, permite compartilhamento de conhecimento entre a equipe e evita que códigos com problemas sejam integrados ao repositório principal.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Pull Requests são essenciais para garantir qualidade através de revisão de código. Eles permitem que outros membros da equipe revisem, comentem e aprovem mudanças antes da integração.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">4. Como commits semânticos ajudam especificamente profissionais de QA?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 4)">Tornam os testes mais rápidos</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'conceitos', 4)">Facilitam rastreabilidade e leitura do histórico do repositório</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 4)">Reduzem o tamanho dos arquivos de teste</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 4)">Eliminam a necessidade de documentação</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-conceitos-4" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> Commits semânticos facilitam muito a vida do QA ao permitir entender rapidamente o que mudou no histórico. Quando um teste quebra, você pode facilmente identificar qual commit introduziu a mudança e entender o contexto da alteração.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Commits semânticos são importantes para rastreabilidade. Eles ajudam a entender rapidamente o que mudou, facilitando debugging, manutenção dos testes e integração com pipelines de CI/CD.</div>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('conceitos-essenciais')">← Anterior</button>
+                    <button class="btn" onclick="showPage('comandos-basicos')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Página Comandos Básicos -->
+            <div class="page" id="comandos-basicos">
+                <h1>💻 Comandos Básicos - Revisão Prática</h1>
+
+                <p>Aqui estão os comandos essenciais que você usa no dia a dia como QA. Esta é uma revisão prática com foco nas situações mais comuns:</p>
+
+                <div class="table-container">
+                    <table class="command-table">
+                        <thead>
+                            <tr>
+                                <th>Ação</th>
+                                <th>Comando</th>
+                                <th>Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Clonar repositório</td>
+                                <td>git clone &lt;url&gt;</td>
+                                <td>Cria cópia local do repositório.</td>
+                            </tr>
+                            <tr>
+                                <td>Criar nova branch</td>
+                                <td>git checkout -b feature/nome-da-feature</td>
+                                <td>Sempre criar branch a partir da main ou develop.</td>
+                            </tr>
+                            <tr>
+                                <td>Ver status local</td>
+                                <td>git status</td>
+                                <td>Mostra alterações e arquivos pendentes de commit.</td>
+                            </tr>
+                            <tr>
+                                <td>Adicionar mudanças</td>
+                                <td>git add . ou git add &lt;arquivo&gt;</td>
+                                <td>Adiciona arquivos para o próximo commit.</td>
+                            </tr>
+                            <tr>
+                                <td>Criar commit</td>
+                                <td>git commit -m "feat: descrição do commit"</td>
+                                <td>Use prefixos semânticos (ver abaixo).</td>
+                            </tr>
+                            <tr>
+                                <td>Enviar alterações</td>
+                                <td>git push origin feature/nome-da-feature</td>
+                                <td>Publica a branch no GitHub.</td>
+                            </tr>
+                            <tr>
+                                <td>Atualizar branch local</td>
+                                <td>git pull origin main</td>
+                                <td>Atualiza código antes do merge.</td>
+                            </tr>
+                            <tr>
+                                <td>Reverter commit</td>
+                                <td>git revert &lt;hash&gt;</td>
+                                <td>Cria novo commit revertendo o anterior.</td>
+                            </tr>
+                            <tr>
+                                <td>Descartar mudanças locais</td>
+                                <td>git restore &lt;arquivo&gt;</td>
+                                <td>Cancela edições ainda não commitadas.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="interactive-box">
+                    <h3>🎯 Fluxo Típico de Trabalho para QA</h3>
+                    <div class="code-block">
+# 1. Clonar o repositório (primeira vez)
+git clone https://github.com/empresa/projeto-testes.git
+
+# 2. Criar branch para nova funcionalidade de teste
+git checkout -b test/validacao-login-api
+
+# 3. Verificar status das mudanças
+git status
+
+# 4. Adicionar arquivos modificados
+git add .
+
+# 5. Fazer commit com mensagem semântica
+git commit -m "test: adicionar validações de login com credenciais inválidas"
+
+# 6. Enviar para o repositório remoto
+git push origin test/validacao-login-api
+
+# 7. Atualizar branch local com mudanças da main
+git pull origin main
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>⚠️ Comandos Importantes para Situações de Emergência</h4>
+                    <div class="code-block">
+# Reverter último commit (mantém mudanças locais)
+git reset --soft HEAD~1
+
+# Descartar todas as mudanças locais não commitadas
+git restore .
+
+# Ver histórico de commits
+git log --oneline
+
+# Mudar para branch específica
+git checkout nome-da-branch
+
+# Ver todas as branches
+git branch -a
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('quiz-conceitos')">← Anterior</button>
+                    <button class="btn" onclick="showPage('quiz-comandos')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Quiz Comandos -->
+            <div class="page" id="quiz-comandos">
+                <h1>💻 Quiz - Comandos Básicos</h1>
+
+                <p>Teste seus conhecimentos sobre os comandos essenciais do Git!</p>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">1. Qual comando você usa para criar uma nova branch e mudar para ela imediatamente?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 1)">git branch nova-branch</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'comandos', 1)">git checkout -b nova-branch</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 1)">git create nova-branch</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 1)">git switch nova-branch</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-comandos-1" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> O comando <code>git checkout -b nova-branch</code> é um atalho que cria uma nova branch e muda para ela imediatamente. Isso é muito útil no dia a dia, especialmente quando você precisa começar a trabalhar rapidamente em uma nova funcionalidade de teste.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O comando correto é <code>git checkout -b nova-branch</code>. Este comando combina a criação da branch com a mudança para ela, sendo muito mais eficiente que fazer os dois passos separadamente.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">2. Você fez mudanças em vários arquivos de teste. Qual comando adiciona TODOS os arquivos modificados para o próximo commit?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 2)">git commit -a</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'comandos', 2)">git add .</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 2)">git push all</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 2)">git stage *</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-comandos-2" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> O comando <code>git add .</code> adiciona todos os arquivos modificados, novos e deletados no diretório atual para a staging area. É muito útil quando você fez mudanças em múltiplos arquivos de teste e quer incluir todos no próximo commit.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O comando correto é <code>git add .</code> (com ponto). O ponto representa o diretório atual e adiciona todas as mudanças para a staging area, preparando-as para o commit.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">3. Você commitou um teste que está com bug e precisa reverter. Qual comando cria um novo commit que desfaz as mudanças do commit anterior?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 3)">git undo</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 3)">git reset HEAD~1</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'comandos', 3)">git revert &lt;hash&gt;</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 3)">git delete &lt;hash&gt;</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-comandos-3" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> O comando <code>git revert &lt;hash&gt;</code> é a forma mais segura de desfazer um commit. Ele cria um novo commit que desfaz as mudanças do commit especificado, mantendo o histórico intacto. Isso é especialmente importante em ambientes de produção ou quando trabalhando em equipe.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O comando correto é <code>git revert &lt;hash&gt;</code>. Este comando é mais seguro que reset porque cria um novo commit desfazendo as mudanças, ao invés de apagar o histórico.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">4. Antes de fazer merge da sua branch, você quer atualizar seu código local com as últimas mudanças da branch main. Qual comando usar?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 4)">git merge main</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'comandos', 4)">git pull origin main</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 4)">git fetch main</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 4)">git update main</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-comandos-4" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> O comando <code>git pull origin main</code> baixa as últimas mudanças da branch main do repositório remoto e as integra na sua branch local. Isso é uma boa prática antes de fazer merge ou abrir um Pull Request, garantindo que seu código está atualizado.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O comando correto é <code>git pull origin main</code>. Este comando combina fetch (baixar) e merge (integrar) das mudanças da branch main remota para sua branch local atual.</div>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('comandos-basicos')">← Anterior</button>
+                    <button class="btn" onclick="showPage('nomenclatura-branches')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Página Nomenclatura de Branches -->
+            <div class="page" id="nomenclatura-branches">
+                <h1>🧱 Padrão de Nomenclatura de Branches</h1>
+
+                <p>Uma nomenclatura consistente de branches facilita a organização do trabalho e a colaboração em equipe. Vamos ver os padrões recomendados:</p>
+
+                <div class="interactive-box">
+                    <h3>📋 Padrão Recomendado</h3>
+                    <div class="code-block">&lt;tipo&gt;/&lt;descrição-curta&gt;</div>
+                    <p><strong>Exemplo:</strong> <code>test/validacao-login-api</code></p>
+                </div>
+
+                <h2>🏷️ Tipos Comuns para QA</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Uso</th>
+                                <th>Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>feature/</strong></td>
+                                <td>Nova funcionalidade ou fluxo de automação</td>
+                                <td>feature/adicionar-teste-login</td>
+                            </tr>
+                            <tr>
+                                <td><strong>fix/</strong></td>
+                                <td>Correção de bug ou ajuste no teste</td>
+                                <td>fix/ajuste-assert-login</td>
+                            </tr>
+                            <tr>
+                                <td><strong>test/</strong></td>
+                                <td>Melhoria ou novo teste automatizado</td>
+                                <td>test/api-validacoes-negativas</td>
+                            </tr>
+                            <tr>
+                                <td><strong>chore/</strong></td>
+                                <td>Alterações de configuração ou dependência</td>
+                                <td>chore/configurar-playwright</td>
+                            </tr>
+                            <tr>
+                                <td><strong>docs/</strong></td>
+                                <td>Atualização de documentação</td>
+                                <td>docs/instrucoes-de-execucao</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <h4>✅ Boas Práticas</h4>
+                    <ul>
+                        <li><strong>Sempre usar letras minúsculas e hífens (-).</strong></li>
+                        <li><strong>Evitar nomes genéricos</strong> como feature/teste ou fix/bug.</li>
+                        <li><strong>Sempre relacionar a branch a uma tarefa</strong> do board (Jira/Trello/etc).</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-box">
+                    <h3>💡 Exemplos Práticos para QA</h3>
+                    <div class="code-block">
+# ✅ Bons exemplos
+test/validacao-email-invalido
+feature/automacao-checkout-completo
+fix/timeout-teste-api-pagamento
+chore/atualizar-selenium-webdriver
+docs/guia-execucao-testes-mobile
+
+# ❌ Exemplos ruins
+test/teste
+feature/nova-feature
+fix/bug
+minha-branch
+teste123
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>🎯 Relacionando com Tarefas</h4>
+                    <p>Uma boa prática é incluir o número da tarefa na branch:</p>
+                    <div class="code-block">
+# Com número da tarefa do Jira
+test/QA-123-validacao-login-api
+feature/QA-456-automacao-carrinho-compras
+fix/QA-789-corrigir-seletor-botao-submit
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('quiz-comandos')">← Anterior</button>
+                    <button class="btn" onclick="showPage('commits-semanticos')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Página Commits Semânticos -->
+            <div class="page" id="commits-semanticos">
+                <h1>🔍 Commits Semânticos</h1>
+
+                <p>Adotar um padrão de commit ajuda na leitura do histórico e nas pipelines de CI/CD. É especialmente útil para QAs que precisam rastrear mudanças em testes.</p>
+
+                <div class="interactive-box">
+                    <h3>📋 Formato Padrão</h3>
+                    <div class="code-block">&lt;tipo&gt;: &lt;descrição breve&gt;</div>
+                    <p><strong>Exemplo:</strong> <code>test: adicionar validação de login com credenciais inválidas</code></p>
+                </div>
+
+                <h2>🏷️ Tipos Sugeridos para QA</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Significado</th>
+                                <th>Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>feat:</strong></td>
+                                <td>nova funcionalidade</td>
+                                <td>feat: adicionar validação de login inválido</td>
+                            </tr>
+                            <tr>
+                                <td><strong>fix:</strong></td>
+                                <td>correção de bug</td>
+                                <td>fix: corrigir timeout no teste de API</td>
+                            </tr>
+                            <tr>
+                                <td><strong>test:</strong></td>
+                                <td>adição/ajuste de testes</td>
+                                <td>test: incluir cenários de erro 500</td>
+                            </tr>
+                            <tr>
+                                <td><strong>refactor:</strong></td>
+                                <td>melhoria de código sem alterar comportamento</td>
+                                <td>refactor: extrair função de login</td>
+                            </tr>
+                            <tr>
+                                <td><strong>chore:</strong></td>
+                                <td>manutenção e setup</td>
+                                <td>chore: atualizar dependências npm</td>
+                            </tr>
+                            <tr>
+                                <td><strong>docs:</strong></td>
+                                <td>documentação</td>
+                                <td>docs: adicionar instruções de execução</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <h4>💡 Exemplos Específicos para Automação de Testes</h4>
+                    <div class="code-block">
+# Adicionando novos testes
+test: adicionar cenários de validação de CPF inválido
+test: incluir testes de API para endpoint de usuários
+test: criar suite de testes para funcionalidade de carrinho
+
+# Corrigindo testes existentes
+fix: corrigir seletor do botão de submit no teste de login
+fix: ajustar timeout para testes de API lenta
+fix: resolver flakiness no teste de upload de arquivo
+
+# Melhorias na automação
+refactor: extrair helper para autenticação de usuários
+refactor: organizar page objects em pastas por módulo
+feat: adicionar relatório HTML para resultados dos testes
+
+# Configuração e manutenção
+chore: atualizar Playwright para versão 1.40
+chore: configurar pipeline de CI para testes E2E
+docs: atualizar README com instruções de execução local
+                    </div>
+                </div>
+
+                <div class="interactive-box">
+                    <h3>🎯 Por que usar commits semânticos?</h3>
+                    <ul>
+                        <li><strong>Histórico claro:</strong> Facilita entender o que mudou rapidamente</li>
+                        <li><strong>Automação:</strong> Ferramentas podem gerar changelogs automaticamente</li>
+                        <li><strong>CI/CD:</strong> Pipelines podem reagir diferente baseado no tipo de commit</li>
+                        <li><strong>Debugging:</strong> Mais fácil encontrar quando um bug foi introduzido</li>
+                        <li><strong>Colaboração:</strong> Equipe entende melhor as mudanças</li>
+                    </ul>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('nomenclatura-branches')">← Anterior</button>
+                    <button class="btn" onclick="showPage('quiz-nomenclatura')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Quiz Nomenclatura -->
+            <div class="page" id="quiz-nomenclatura">
+                <h1>🧱 Quiz - Nomenclatura e Commits</h1>
+
+                <p>Teste seus conhecimentos sobre nomenclatura de branches e commits semânticos!</p>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">1. Qual é o formato correto para nomear uma branch que adiciona testes de validação de email?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 1)">Teste_Email_Validacao</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'nomenclatura', 1)">test/validacao-email</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 1)">TestEmailValidation</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 1)">test-validacao-email</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-nomenclatura-1" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> O formato <code>test/validacao-email</code> segue o padrão recomendado: <code>&lt;tipo&gt;/&lt;descrição-curta&gt;</code>. Usa letras minúsculas, hífens para separar palavras, e o prefixo "test/" indica que é uma branch para testes.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O formato correto é <code>test/validacao-email</code>. Sempre use o padrão <code>&lt;tipo&gt;/&lt;descrição-curta&gt;</code> com letras minúsculas e hífens.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">2. Você está corrigindo um bug em um teste que estava falhando. Qual prefixo de branch usar?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 2)">test/</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'nomenclatura', 2)">fix/</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 2)">feature/</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 2)">chore/</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-nomenclatura-2" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> O prefixo <code>fix/</code> é usado para correções de bugs ou ajustes em testes existentes. Por exemplo: <code>fix/ajuste-seletor-botao-login</code>. Isso deixa claro que você está corrigindo algo que já existia.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Para correção de bugs use <code>fix/</code>. O prefixo <code>test/</code> é para novos testes, <code>feature/</code> para novas funcionalidades, e <code>chore/</code> para configurações.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">3. Qual commit semântico está correto para adicionar novos cenários de teste de API?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 3)">feat: novos testes</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'nomenclatura', 3)">test: adicionar cenários de validação de API de usuários</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 3)">add: testes de API</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 3)">update: API tests</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-nomenclatura-3" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> O commit <code>test: adicionar cenários de validação de API de usuários</code> usa o prefixo correto "test:" para adição de testes e tem uma descrição clara e específica do que foi feito.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Para adição de testes use o prefixo <code>test:</code> seguido de uma descrição clara. Evite descrições genéricas como "novos testes" - seja específico sobre o que foi testado.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">4. Você atualizou a versão do Playwright no projeto. Qual tipo de commit usar?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 4)">feat: atualizar Playwright</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 4)">fix: atualizar Playwright</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'nomenclatura', 4)">chore: atualizar Playwright para versão 1.40</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 4)">test: atualizar Playwright</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-nomenclatura-4" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> O prefixo <code>chore:</code> é usado para manutenção, configurações e atualizações de dependências. <code>chore: atualizar Playwright para versão 1.40</code> é específico e deixa claro que foi uma atualização de dependência.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Para atualizações de dependências e configurações use <code>chore:</code>. Este prefixo é específico para tarefas de manutenção que não alteram funcionalidades ou testes diretamente.</div>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('commits-semanticos')">← Anterior</button>
+                    <button class="btn" onclick="showPage('pull-request')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Página Pull Request -->
+            <div class="page" id="pull-request">
+                <h1>🔄 Pull Request (PR) e Revisão de Código</h1>
+
+                <div class="interactive-box">
+                    <h3>🧠 Objetivo do PR</h3>
+                    <p>Garantir que todo código entregue:</p>
+                    <ul>
+                        <li>Está alinhado ao padrão do time;</li>
+                        <li>Passou pelos testes automatizados;</li>
+                        <li>Foi revisado e validado por outro QA/dev.</li>
+                    </ul>
+                </div>
+
+                <h2>💡 Boas Práticas ao Abrir um PR</h2>
+
+                <div class="example-box">
+                    <h4>📏 Tamanho e Foco</h4>
+                    <ul>
+                        <li><strong>Mantenha o PR pequeno e focado.</strong></li>
+                        <li><strong>Uma mudança lógica por PR.</strong></li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>📝 Título Descritivo</h4>
+                    <p><strong>✅ Bom exemplo:</strong></p>
+                    <div class="code-block">"Adicionar testes de login com credenciais inválidas"</div>
+
+                    <p><strong>❌ Exemplo ruim:</strong></p>
+                    <div class="code-block">"Testes de login"</div>
+                </div>
+
+                <div class="example-box">
+                    <h4>📋 Descrição Clara</h4>
+                    <p>Descreva claramente o que foi feito:</p>
+                    <div class="code-block">
+## O que foi feito
+- Adicionado teste automatizado de login inválido
+- Criado helper para autenticação
+
+## Como testar
+- Rodar `npx playwright test --grep @login`
+                    </div>
+                </div>
+
+                <div class="interactive-box">
+                    <h3>✅ Checklist antes de abrir PR</h3>
+                    <ul>
+                        <li>Adicione reviewers relevantes</li>
+                        <li>Verifique que os testes e linters estão passando</li>
+                        <li>Inclua instruções de como testar</li>
+                        <li>Referencie a tarefa do board (Jira/Trello)</li>
+                        <li>Verifique se a branch está atualizada com a main</li>
+                    </ul>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('quiz-nomenclatura')">← Anterior</button>
+                    <button class="btn" onclick="showPage('revisao-codigo')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Página Revisão de Código -->
+            <div class="page" id="revisao-codigo">
+                <h1>🧩 Boas Práticas ao Revisar um PR</h1>
+
+                <p>A revisão de código é uma oportunidade de aprendizado e melhoria contínua da qualidade. Veja como fazer revisões efetivas:</p>
+
+                <div class="interactive-box">
+                    <h3>🎯 Princípios da Boa Revisão</h3>
+                    <ul>
+                        <li><strong>Comente de forma construtiva e específica</strong></li>
+                        <li><strong>Verifique claridade, legibilidade e padrões do time</strong></li>
+                        <li><strong>Se necessário, faça o checkout local para testar</strong> (<code>gh pr checkout &lt;número&gt;</code>)</li>
+                        <li><strong>Evite "apenas aprovar"</strong> — toda revisão é uma oportunidade de aprendizado</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>✅ Comentários Construtivos</h4>
+                    <div class="code-block">
+# ✅ Bom comentário
+"Seria interessante adicionar um timeout maior aqui,
+pois a API pode demorar mais em ambiente de produção.
+Que tal usar 10 segundos ao invés de 5?"
+
+# ❌ Comentário não construtivo
+"Isso está errado."
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>🔍 O que Revisar em Testes</h4>
+                    <ul>
+                        <li><strong>Clareza:</strong> Os testes são fáceis de entender?</li>
+                        <li><strong>Cobertura:</strong> Os cenários importantes estão cobertos?</li>
+                        <li><strong>Seletores:</strong> Estão robustos e não frágeis?</li>
+                        <li><strong>Assertions:</strong> São específicas e claras?</li>
+                        <li><strong>Dados de teste:</strong> Estão bem organizados?</li>
+                        <li><strong>Padrões:</strong> Seguem as convenções da equipe?</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-box">
+                    <h3>🛠️ Testando Localmente</h3>
+                    <p>Para testar um PR localmente:</p>
+                    <div class="code-block">
+# Usando GitHub CLI
+gh pr checkout 123
+
+# Ou manualmente
+git fetch origin pull/123/head:pr-123
+git checkout pr-123
+
+# Executar os testes
+npm test
+# ou
+npx playwright test
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>💬 Tipos de Feedback</h4>
+                    <ul>
+                        <li><strong>Sugestão:</strong> "Que tal extrair isso para uma função helper?"</li>
+                        <li><strong>Pergunta:</strong> "Por que escolheu esse seletor específico?"</li>
+                        <li><strong>Elogio:</strong> "Ótima cobertura de cenários negativos!"</li>
+                        <li><strong>Bloqueante:</strong> "Este teste vai falhar em mobile, precisa ajustar"</li>
+                        <li><strong>Nitpick:</strong> "Pequeno detalhe: poderia usar const ao invés de let aqui"</li>
+                    </ul>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('pull-request')">← Anterior</button>
+                    <button class="btn" onclick="showPage('quiz-pr')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Quiz Pull Request -->
+            <div class="page" id="quiz-pr">
+                <h1>🔄 Quiz - Pull Request e Revisão</h1>
+
+                <p>Teste seus conhecimentos sobre Pull Requests e revisão de código!</p>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">1. Qual é o principal objetivo de um Pull Request?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 1)">Fazer backup do código</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'pr', 1)">Garantir revisão e validação de qualidade antes do merge</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 1)">Acelerar o desenvolvimento</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 1)">Reduzir o tamanho dos arquivos</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-pr-1" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> O Pull Request é um mecanismo de controle de qualidade que garante que todo código seja revisado e validado antes de ser integrado ao repositório principal. Isso mantém a qualidade, permite compartilhamento de conhecimento e evita bugs em produção.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O principal objetivo do PR é garantir qualidade através de revisão. Ele permite que outros membros da equipe revisem, testem e aprovem mudanças antes da integração ao código principal.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">2. Qual é uma boa prática ao abrir um Pull Request?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 2)">Incluir o máximo de mudanças possível em um PR</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'pr', 2)">Manter o PR pequeno e focado em uma mudança lógica</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 2)">Não adicionar descrição para economizar tempo</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 2)">Abrir o PR mesmo com testes falhando</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-pr-2" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> PRs pequenos e focados são mais fáceis de revisar, têm menos chance de conflitos e permitem feedback mais específico. Uma mudança lógica por PR facilita o entendimento e acelera o processo de revisão.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> PRs devem ser pequenos e focados. PRs grandes são difíceis de revisar, mais propensos a bugs e demoram mais para serem aprovados. Sempre inclua descrição clara e garanta que os testes estão passando.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">3. Ao revisar um PR de testes automatizados, o que é mais importante verificar?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 3)">Apenas se o código compila</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 3)">Somente a performance dos testes</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'pr', 3)">Clareza, cobertura de cenários, robustez dos seletores e padrões da equipe</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 3)">Apenas o número de linhas de código</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-pr-3" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> Na revisão de testes automatizados é importante verificar se os testes são claros, cobrem cenários importantes, usam seletores robustos, têm assertions específicas e seguem os padrões da equipe. Isso garante testes de qualidade e manuteníveis.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> A revisão de testes deve ser abrangente, verificando clareza, cobertura, robustez dos seletores, qualidade das assertions e aderência aos padrões da equipe. Não se limite apenas a aspectos técnicos básicos.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">4. Como deve ser um comentário construtivo em uma revisão de PR?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 4)">"Isso está errado."</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'pr', 4)">"Seria interessante adicionar um timeout maior aqui, pois a API pode demorar mais em produção."</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 4)">"Não gostei."</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 4)">"Mude tudo."</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-pr-4" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> Um comentário construtivo é específico, explica o motivo da sugestão e oferece uma solução clara. Ele ajuda o autor a entender o problema e como resolvê-lo, promovendo aprendizado e melhoria contínua.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Comentários construtivos devem ser específicos, explicar o motivo e oferecer soluções. Evite comentários vagos ou negativos que não ajudam o autor a melhorar o código.</div>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('revisao-codigo')">← Anterior</button>
+                    <button class="btn" onclick="showPage('quiz-final')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Quiz Final -->
+            <div class="page" id="quiz-final">
+                <h1>🏆 Quiz Final - Conhecimento Geral</h1>
+
+                <p>Teste todo seu conhecimento com este quiz abrangente sobre Git para QA!</p>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">1. Você precisa criar uma branch para adicionar testes de validação de CPF. Qual nome seguiria as melhores práticas?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 1)">TesteCPF</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, true, 1)">test/validacao-cpf</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 1)">feature/CPF_validation</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 1)">nova-branch-cpf</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-final-1" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> <code>test/validacao-cpf</code> segue o padrão <code>&lt;tipo&gt;/&lt;descrição-curta&gt;</code> com letras minúsculas, hífens e prefixo apropriado para testes.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Use o padrão <code>test/validacao-cpf</code> - sempre minúsculas, hífens e prefixo que indica o tipo de mudança.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">2. Qual sequência de comandos está correta para contribuir com um novo teste?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 2)">git commit → git add → git push</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, true, 2)">git checkout -b test/nova-validacao → git add . → git commit -m "test: adicionar validação" → git push origin test/nova-validacao</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 2)">git push → git add → git commit</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 2)">git add → git push → git commit</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-final-2" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> Esta sequência segue o fluxo completo: criar branch, adicionar mudanças, fazer commit semântico e enviar para o repositório remoto.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> A sequência correta é: criar branch → add → commit → push. Sempre faça commit antes de push.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">3. Você corrigiu um bug em um teste que estava falhando. Qual commit semântico usar?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 3)">feat: corrigir teste</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, true, 3)">fix: corrigir timeout no teste de login</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 3)">test: bug corrigido</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 3)">update: teste funcionando</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-final-3" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> <code>fix:</code> é o prefixo correto para correções, e a descrição é específica sobre o que foi corrigido.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Para correções use <code>fix:</code> seguido de descrição específica do que foi corrigido.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">4. Qual é a melhor prática ao abrir um Pull Request?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 4)">Incluir o máximo de mudanças possível</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 4)">Não adicionar descrição para economizar tempo</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, true, 4)">Manter focado, adicionar descrição clara e instruções de teste</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 4)">Abrir mesmo com testes falhando</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-final-4" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> PRs devem ser focados, ter descrição clara explicando as mudanças e incluir instruções de como testar.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> PRs devem ser pequenos, focados, com descrição clara e instruções de teste. Sempre garanta que os testes estão passando.</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">5. Por que commits semânticos são especialmente úteis para QAs?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 5)">Tornam os testes mais rápidos</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, true, 5)">Facilitam rastreabilidade e integração com pipelines de CI/CD</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 5)">Reduzem o tamanho dos arquivos</div>
+                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 5)">Eliminam a necessidade de testes</div>
+                    </div>
+                    <div class="quiz-feedback" id="feedback-final-5" style="display: none;">
+                        <div class="correct-answer">✅ <strong>Correto!</strong> Commits semânticos facilitam rastreabilidade de mudanças, debugging e permitem que pipelines de CI/CD reajam adequadamente baseado no tipo de mudança.</div>
+                        <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Commits semânticos ajudam na rastreabilidade, debugging e automação de pipelines, não na performance ou tamanho dos arquivos.</div>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="calculateFinalQuizScore()" id="final-quiz-submit" style="margin-top: 20px;">Finalizar Quiz</button>
+                <div id="final-quiz-result" style="margin-top: 20px; padding: 20px; border-radius: 8px; display: none;"></div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('quiz-pr')">← Anterior</button>
+                    <button class="btn" onclick="showPage('recursos')">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- Página Recursos -->
+            <div class="page" id="recursos">
+                <h1>📎 Recursos Adicionais</h1>
+
+                <p>Parabéns por completar a revisão de Git para QA! Aqui estão recursos adicionais para continuar aprendendo:</p>
+
+                <div class="interactive-box">
+                    <h3>📚 Material de Apoio Sugerido</h3>
+                    <ul>
+                        <li><strong>Documentação oficial do Git:</strong> <a href="https://git-scm.com/doc" target="_blank" rel="noopener noreferrer">git-scm.com/doc</a></li>
+                        <li><strong>GitHub Flow:</strong> <a href="https://guides.github.com/introduction/flow/" target="_blank" rel="noopener noreferrer">Guia visual do fluxo de trabalho</a></li>
+                        <li><strong>Conventional Commits:</strong> <a href="https://www.conventionalcommits.org/" target="_blank" rel="noopener noreferrer">Especificação completa</a></li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>🎯 Resumo dos Principais Conceitos</h4>
+                    <ul>
+                        <li><strong>Controle de versão:</strong> Essencial para histórico e rollback seguro</li>
+                        <li><strong>Branching:</strong> Permite trabalho paralelo sem conflitos</li>
+                        <li><strong>Nomenclatura:</strong> <code>&lt;tipo&gt;/&lt;descrição-curta&gt;</code></li>
+                        <li><strong>Commits semânticos:</strong> <code>&lt;tipo&gt;: &lt;descrição&gt;</code></li>
+                        <li><strong>Pull Requests:</strong> Garantem qualidade através de revisão</li>
+                    </ul>
+                </div>
+
+                <div class="interactive-box">
+                    <h3>🚀 Próximos Passos</h3>
+                    <p>Para continuar evoluindo suas habilidades com Git:</p>
+                    <ul>
+                        <li>Pratique os comandos em projetos reais</li>
+                        <li>Implemente os padrões de nomenclatura na sua equipe</li>
+                        <li>Faça revisões de código construtivas</li>
+                        <li>Explore funcionalidades avançadas como rebase e cherry-pick</li>
+                        <li>Configure hooks para automatizar validações</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>🏆 Você Dominou</h4>
+                    <ul>
+                        <li>✅ Conceitos essenciais do Git no contexto de QA</li>
+                        <li>✅ Comandos básicos para o dia a dia</li>
+                        <li>✅ Padrões de nomenclatura de branches</li>
+                        <li>✅ Commits semânticos para rastreabilidade</li>
+                        <li>✅ Processo de Pull Request e revisão</li>
+                        <li>✅ Boas práticas para colaboração em equipe</li>
+                    </ul>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #8B5CF6, #C084FC); padding: 25px; border-radius: 15px; color: white; text-align: center; margin: 30px 0;">
+                    <h3 style="color: white; margin-bottom: 15px;">🎉 Parabéns, <span id="finalUserName">Estudante</span>!</h3>
+                    <p style="margin: 0; font-size: 18px; font-weight: bold;">
+                        Você completou com sucesso a apostila de Git para QA! Agora você está pronto para aplicar essas práticas em projetos reais!
+                    </p>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" onclick="showPage('quiz-final')">← Anterior</button>
+                    <button class="btn" onclick="showPage('boas-vindas')">Recomeçar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 'login-page';
+        let completedPages = new Set(['login-page']);
+        let quizAnswers = {};
+        let finalQuizAnswers = {};
+        let userName = '';
+
+        function startApostila() {
+            const nameInput = document.getElementById('userName');
+            const inputName = nameInput.value.trim();
+
+            if (!inputName) {
+                nameInput.style.borderColor = '#e74c3c';
+                nameInput.placeholder = 'Por favor, digite seu nome para continuar...';
+                nameInput.focus();
+                return;
+            }
+
+            userName = inputName;
+            localStorage.setItem('userName', userName);
+
+            // Atualizar elementos com o nome do usuário
+            updateUserNameElements();
+
+            // Ir para página de boas-vindas
+            showPage('boas-vindas');
+        }
+
+        function updateUserNameElements() {
+            // Atualizar nome na página de boas-vindas
+            const welcomeElement = document.getElementById('welcomeUserName');
+            if (welcomeElement) {
+                welcomeElement.textContent = userName;
+            }
+
+            // Atualizar nome na página final
+            const finalElement = document.getElementById('finalUserName');
+            if (finalElement) {
+                finalElement.textContent = userName;
+            }
+
+            // Atualizar todos os feedbacks dos quizzes
+            document.querySelectorAll('.user-name-feedback').forEach(element => {
+                element.textContent = userName;
+            });
+        }
+
+        function toggleChapter(chapterId) {
+            const chapter = document.getElementById(chapterId);
+            const chapterTitle = chapter.previousElementSibling;
+
+            if (chapter.style.display === 'none' || !chapter.style.display) {
+                chapter.style.display = 'block';
+                chapterTitle.classList.add('active');
+            } else {
+                chapter.style.display = 'none';
+                chapterTitle.classList.remove('active');
+            }
+        }
+
+        function showPage(pageId) {
+            // Esconder página atual
+            document.getElementById(currentPage).classList.remove('active');
+
+            // Mostrar nova página
+            document.getElementById(pageId).classList.add('active');
+
+            // Atualizar página atual
+            currentPage = pageId;
+
+            // Marcar como completada
+            completedPages.add(pageId);
+
+            // Atualizar progresso
+            updateProgress();
+
+            // Atualizar navegação ativa
+            updateActiveNavigation(pageId);
+        }
+
+        function updateActiveNavigation(pageId) {
+            // Remover classe active de todos os subchapters
+            document.querySelectorAll('.subchapter').forEach(sub => {
+                sub.classList.remove('active');
+            });
+
+            // Adicionar classe active ao subchapter atual
+            document.querySelectorAll('.subchapter').forEach(sub => {
+                if (sub.onclick && sub.onclick.toString().includes(pageId)) {
+                    sub.classList.add('active');
+                }
+            });
+        }
+
+        function updateProgress() {
+            const totalPages = 13; // Total de páginas na apostila
+            const progress = (completedPages.size / totalPages) * 100;
+
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = Math.round(progress) + '%';
+        }
+
+        function selectQuizOption(option, isCorrect, quizType, questionNumber) {
+            const container = option.closest('.quiz-container');
+            const options = container.querySelectorAll('.quiz-option');
+            const feedbackElement = container.querySelector('.quiz-feedback');
+
+            // Remover seleções anteriores
+            options.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+
+            // Marcar opção selecionada
+            option.classList.add('selected');
+
+            // Salvar resposta
+            const quizKey = `${quizType}-${questionNumber}`;
+            quizAnswers[quizKey] = isCorrect;
+
+            // Mostrar feedback após um breve delay
+            setTimeout(() => {
+                options.forEach(opt => {
+                    const optIsCorrect = opt.onclick.toString().includes('true');
+                    if (optIsCorrect) {
+                        opt.classList.add('correct');
+                    } else if (opt.classList.contains('selected')) {
+                        opt.classList.add('incorrect');
+                    }
+                });
+
+                // Mostrar feedback apropriado
+                const correctAnswer = feedbackElement.querySelector('.correct-answer');
+                const incorrectAnswer = feedbackElement.querySelector('.incorrect-answer');
+
+                feedbackElement.style.display = 'block';
+
+                if (isCorrect) {
+                    feedbackElement.className = 'quiz-feedback correct';
+                    correctAnswer.style.display = 'block';
+                    incorrectAnswer.style.display = 'none';
+                } else {
+                    feedbackElement.className = 'quiz-feedback incorrect';
+                    correctAnswer.style.display = 'none';
+                    incorrectAnswer.style.display = 'block';
+                }
+            }, 500);
+        }
+
+        function selectFinalQuizOption(option, isCorrect, questionNumber) {
+            const container = option.closest('.quiz-container');
+            const options = container.querySelectorAll('.quiz-option');
+            const feedbackElement = container.querySelector('.quiz-feedback');
+
+            // Remover seleções anteriores
+            options.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+
+            // Marcar opção selecionada
+            option.classList.add('selected');
+
+            // Salvar resposta
+            finalQuizAnswers[questionNumber] = isCorrect;
+
+            // Mostrar feedback após um breve delay
+            setTimeout(() => {
+                options.forEach(opt => {
+                    const optIsCorrect = opt.onclick.toString().includes('true');
+                    if (optIsCorrect) {
+                        opt.classList.add('correct');
+                    } else if (opt.classList.contains('selected')) {
+                        opt.classList.add('incorrect');
+                    }
+                });
+
+                // Mostrar feedback apropriado
+                const correctAnswer = feedbackElement.querySelector('.correct-answer');
+                const incorrectAnswer = feedbackElement.querySelector('.incorrect-answer');
+
+                feedbackElement.style.display = 'block';
+
+                if (isCorrect) {
+                    feedbackElement.className = 'quiz-feedback correct';
+                    correctAnswer.style.display = 'block';
+                    incorrectAnswer.style.display = 'none';
+                } else {
+                    feedbackElement.className = 'quiz-feedback incorrect';
+                    correctAnswer.style.display = 'none';
+                    incorrectAnswer.style.display = 'block';
+                }
+            }, 500);
+        }
+
+        function calculateFinalQuizScore() {
+            const totalQuestions = 5;
+            const correctAnswers = Object.values(finalQuizAnswers).filter(answer => answer === true).length;
+            const score = (correctAnswers / totalQuestions) * 100;
+
+            const resultDiv = document.getElementById('final-quiz-result');
+            resultDiv.style.display = 'block';
+
+            let message = '';
+            let bgColor = '';
+
+            const userName = localStorage.getItem('userName') || 'Estudante';
+
+            if (score >= 80) {
+                message = `🎉 Parabéns, ${userName}! Você acertou ${correctAnswers} de ${totalQuestions} questões (${score}%). Você domina os conceitos de Git para QA!`;
+                bgColor = '#d4edda';
+            } else if (score >= 60) {
+                message = `👍 Bom trabalho, ${userName}! Você acertou ${correctAnswers} de ${totalQuestions} questões (${score}%). Continue praticando!`;
+                bgColor = '#fff3cd';
+            } else {
+                message = `📚 Continue estudando, ${userName}! Você acertou ${correctAnswers} de ${totalQuestions} questões (${score}%). Revise os conceitos e tente novamente.`;
+                bgColor = '#f8d7da';
+            }
+
+            resultDiv.innerHTML = `
+                ${message}
+                <button class="btn" onclick="showDetailedReport()" style="margin-top: 15px;">
+                    📊 Ver Relatório Detalhado de Desempenho
+                </button>
+            `;
+            resultDiv.style.backgroundColor = bgColor;
+            resultDiv.style.border = '1px solid #ccc';
+
+            // Desabilitar botão
+            document.getElementById('final-quiz-submit').disabled = true;
+        }
+
+        function generatePerformanceReport() {
+            // Calcular desempenho por categoria
+            const categories = {
+                'conceitos': { name: 'Conceitos Essenciais', questions: 4, correct: 0, details: [] },
+                'comandos': { name: 'Comandos Básicos', questions: 4, correct: 0, details: [] },
+                'nomenclatura': { name: 'Nomenclatura e Commits', questions: 4, correct: 0, details: [] },
+                'pr': { name: 'Pull Request e Revisão', questions: 4, correct: 0, details: [] },
+                'final': { name: 'Quiz Final', questions: 5, correct: 0, details: [] }
+            };
+
+            // Definir detalhes das questões por categoria
+            const questionDetails = {
+                'conceitos': [
+                    'Por que o controle de versão é importante para QA?',
+                    'Principal benefício do branching para equipes de QA',
+                    'Importância dos Pull Requests no contexto de QA',
+                    'Como commits semânticos ajudam profissionais de QA'
+                ],
+                'comandos': [
+                    'Comando para criar nova branch e mudar para ela',
+                    'Comando para adicionar todos os arquivos modificados',
+                    'Comando para reverter commit com segurança',
+                    'Comando para atualizar código local com mudanças da main'
+                ],
+                'nomenclatura': [
+                    'Formato correto para nomear branch de testes',
+                    'Prefixo correto para correção de bugs',
+                    'Commit semântico correto para novos testes de API',
+                    'Tipo de commit para atualização de dependências'
+                ],
+                'pr': [
+                    'Principal objetivo de um Pull Request',
+                    'Boa prática ao abrir um Pull Request',
+                    'O que verificar ao revisar PR de testes automatizados',
+                    'Como deve ser um comentário construtivo em revisão'
+                ],
+                'final': [
+                    'Nome correto para branch de validação de CPF',
+                    'Sequência correta de comandos para contribuir',
+                    'Commit semântico para correção de bug em teste',
+                    'Melhor prática ao abrir Pull Request',
+                    'Por que commits semânticos são úteis para QAs'
+                ]
+            };
+
+            // Contar acertos por categoria e adicionar detalhes
+            Object.keys(quizAnswers).forEach(key => {
+                const [category, questionNum] = key.split('-');
+                if (categories[category]) {
+                    const questionIndex = parseInt(questionNum) - 1;
+                    const isCorrect = quizAnswers[key] === true;
+
+                    categories[category].details.push({
+                        question: questionDetails[category][questionIndex],
+                        correct: isCorrect,
+                        number: questionNum
+                    });
+
+                    if (isCorrect) {
+                        categories[category].correct++;
+                    }
+                }
+            });
+
+            // Contar acertos do quiz final e adicionar detalhes
+            Object.keys(finalQuizAnswers).forEach((questionNum, index) => {
+                const isCorrect = finalQuizAnswers[questionNum] === true;
+
+                categories.final.details.push({
+                    question: questionDetails.final[index],
+                    correct: isCorrect,
+                    number: questionNum
+                });
+
+                if (isCorrect) {
+                    categories.final.correct++;
+                }
+            });
+
+            return categories;
+        }
+
+        function showDetailedReport() {
+            const categories = generatePerformanceReport();
+
+            // Calcular estatísticas gerais
+            const totalQuestions = Object.values(categories).reduce((sum, cat) => sum + cat.questions, 0);
+            const totalCorrect = Object.values(categories).reduce((sum, cat) => sum + cat.correct, 0);
+            const overallScore = Math.round((totalCorrect / totalQuestions) * 100);
+
+            // Gerar parecer dissertativo
+            const dissertativeAssessment = generateDissertativeAssessment(categories, overallScore);
+
+            // Criar modal com relatório detalhado
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    padding: 30px;
+                    border-radius: 15px;
+                    max-width: 800px;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                ">
+                    <h2 style="color: #4C1D95; margin-bottom: 20px; text-align: center;">
+                        📊 Relatório Detalhado de Desempenho - ${localStorage.getItem('userName') || 'Estudante'}
+                    </h2>
+
+                    <div style="background: #F3E8FF; padding: 20px; border-radius: 10px; margin-bottom: 25px;">
+                        <h3 style="color: #6B21A8; margin-bottom: 15px;">📈 Resumo Geral</h3>
+                        <p><strong>Pontuação Total:</strong> ${totalCorrect}/${totalQuestions} questões (${overallScore}%)</p>
+                        <div style="background: #ecf0f1; height: 20px; border-radius: 10px; overflow: hidden; margin: 10px 0;">
+                            <div style="background: linear-gradient(90deg, #8B5CF6, #C084FC); height: 100%; width: ${overallScore}%; transition: width 0.5s ease;"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h3 style="color: #6B21A8; margin-bottom: 15px;">📋 Desempenho por Categoria</h3>
+                        ${Object.entries(categories).map(([key, category]) => {
+                            const percentage = Math.round((category.correct / category.questions) * 100);
+                            const status = percentage >= 75 ? '🟢' : percentage >= 50 ? '🟡' : '🔴';
+                            return `
+                                <div style="margin-bottom: 15px; padding: 15px; background: #FAF5FF; border-radius: 8px; border-left: 4px solid #8B5CF6;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span><strong>${status} ${category.name}</strong></span>
+                                        <span>${category.correct}/${category.questions} (${percentage}%)</span>
+                                    </div>
+                                    <div style="background: #ecf0f1; height: 8px; border-radius: 4px; margin-top: 8px; overflow: hidden;">
+                                        <div style="background: ${percentage >= 75 ? '#27ae60' : percentage >= 50 ? '#f39c12' : '#e74c3c'}; height: 100%; width: ${percentage}%;"></div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+
+                    <div style="background: #DDD6FE; padding: 20px; border-radius: 10px; margin-bottom: 25px;">
+                        <h3 style="color: #4C1D95; margin-bottom: 15px;">📝 Parecer Dissertativo</h3>
+                        <div style="line-height: 1.6; color: #374151;">
+                            ${dissertativeAssessment}
+                        </div>
+                    </div>
+
+                    <div style="background: #EFF6FF; padding: 20px; border-radius: 10px; margin-bottom: 25px;">
+                        <h3 style="color: #1E40AF; margin-bottom: 15px;">📊 Compilado Detalhado por Questão</h3>
+                        ${generateDetailedQuestionReport(categories)}
+                    </div>
+
+                    <div style="background: #F0FDF4; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3 style="color: #166534; margin-bottom: 15px;">🎯 Recomendações Personalizadas</h3>
+                        ${generatePersonalizedRecommendations(categories)}
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="btn" onclick="this.closest('div').parentElement.remove()" style="background: #8B5CF6; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px;">
+                            Fechar Relatório
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // Fechar modal ao clicar fora
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        function generateDissertativeAssessment(categories, overallScore) {
+            const userName = localStorage.getItem('userName') || 'Estudante';
+            let assessment = '';
+
+            // Análise geral personalizada
+            if (overallScore >= 85) {
+                assessment += `<p><strong>Desempenho Excepcional, ${userName}!</strong> Você demonstrou um domínio sólido e abrangente dos conceitos de Git aplicados ao contexto de QA. Sua pontuação de ${overallScore}% indica que você possui as competências necessárias para trabalhar efetivamente com controle de versão em projetos de automação de testes. Parabéns pelo excelente resultado!</p>`;
+            } else if (overallScore >= 70) {
+                assessment += `<p><strong>Bom Desempenho, ${userName}!</strong> Com ${overallScore}% de aproveitamento, você demonstra uma compreensão satisfatória dos conceitos fundamentais de Git para QA. Há algumas áreas que podem ser aprimoradas, mas você possui uma base sólida para aplicar essas práticas no dia a dia. Continue assim!</p>`;
+            } else if (overallScore >= 50) {
+                assessment += `<p><strong>Desempenho Intermediário, ${userName}.</strong> Sua pontuação de ${overallScore}% indica que você compreende os conceitos básicos, mas ainda há oportunidades significativas de melhoria. É recomendável revisar os tópicos com menor desempenho e praticar mais os comandos e fluxos de trabalho. Não desanime, você está no caminho certo!</p>`;
+            } else {
+                assessment += `<p><strong>Continue Estudando, ${userName}!</strong> Com ${overallScore}% de aproveitamento, é importante dedicar mais tempo ao estudo e prática dos conceitos apresentados. Recomenda-se revisar todo o material e buscar exercícios práticos adicionais. Lembre-se: todo especialista já foi iniciante!</p>`;
+            }
+
+            // Análise por categoria
+            const weakAreas = [];
+            const strongAreas = [];
+
+            Object.entries(categories).forEach(([key, category]) => {
+                const percentage = Math.round((category.correct / category.questions) * 100);
+                if (percentage < 50) {
+                    weakAreas.push(category.name);
+                } else if (percentage >= 75) {
+                    strongAreas.push(category.name);
+                }
+            });
+
+            if (strongAreas.length > 0) {
+                assessment += `<p><strong>Pontos Fortes, ${userName}:</strong> Você demonstrou excelente compreensão em: ${strongAreas.join(', ')}. Estes conhecimentos são fundamentais e você pode aplicá-los com confiança em projetos reais. Continue aproveitando essas competências!</p>`;
+            }
+
+            if (weakAreas.length > 0) {
+                assessment += `<p><strong>Áreas para Desenvolvimento, ${userName}:</strong> Recomenda-se focar especialmente em: ${weakAreas.join(', ')}. Estes tópicos são essenciais para um trabalho eficiente com Git em ambientes de QA. Com dedicação, você certamente dominará esses conceitos!</p>`;
+            }
+
+            // Análise específica por categoria
+            const conceptsScore = Math.round((categories.conceitos.correct / categories.conceitos.questions) * 100);
+            const commandsScore = Math.round((categories.comandos.correct / categories.comandos.questions) * 100);
+            const namingScore = Math.round((categories.nomenclatura.correct / categories.nomenclatura.questions) * 100);
+            const prScore = Math.round((categories.pr.correct / categories.pr.questions) * 100);
+
+            assessment += `<p><strong>Análise Detalhada:</strong></p><ul>`;
+
+            if (conceptsScore >= 75) {
+                assessment += `<li><strong>Conceitos Essenciais (${conceptsScore}%):</strong> Excelente compreensão da importância do Git no contexto de QA.</li>`;
+            } else if (conceptsScore >= 50) {
+                assessment += `<li><strong>Conceitos Essenciais (${conceptsScore}%):</strong> Compreensão adequada, mas pode se beneficiar de mais reflexão sobre como Git impacta o trabalho de QA.</li>`;
+            } else {
+                assessment += `<li><strong>Conceitos Essenciais (${conceptsScore}%):</strong> É fundamental revisar por que Git é importante para QA e como cada conceito se aplica na prática.</li>`;
+            }
+
+            if (commandsScore >= 75) {
+                assessment += `<li><strong>Comandos Básicos (${commandsScore}%):</strong> Domínio sólido dos comandos essenciais do dia a dia.</li>`;
+            } else if (commandsScore >= 50) {
+                assessment += `<li><strong>Comandos Básicos (${commandsScore}%):</strong> Conhecimento razoável, mas recomenda-se mais prática com os comandos fundamentais.</li>`;
+            } else {
+                assessment += `<li><strong>Comandos Básicos (${commandsScore}%):</strong> Necessário praticar mais os comandos básicos, pois são essenciais para o trabalho diário.</li>`;
+            }
+
+            if (namingScore >= 75) {
+                assessment += `<li><strong>Nomenclatura e Commits (${namingScore}%):</strong> Excelente compreensão dos padrões de organização e documentação.</li>`;
+            } else if (namingScore >= 50) {
+                assessment += `<li><strong>Nomenclatura e Commits (${namingScore}%):</strong> Compreensão básica, mas pode melhorar na aplicação consistente dos padrões.</li>`;
+            } else {
+                assessment += `<li><strong>Nomenclatura e Commits (${namingScore}%):</strong> Importante revisar os padrões de nomenclatura e commits semânticos para melhor organização.</li>`;
+            }
+
+            if (prScore >= 75) {
+                assessment += `<li><strong>Pull Request e Revisão (${prScore}%):</strong> Compreende bem a importância da colaboração e qualidade de código.</li>`;
+            } else if (prScore >= 50) {
+                assessment += `<li><strong>Pull Request e Revisão (${prScore}%):</strong> Entendimento básico, mas pode aprofundar nas melhores práticas de colaboração.</li>`;
+            } else {
+                assessment += `<li><strong>Pull Request e Revisão (${prScore}%):</strong> Essencial revisar as práticas de PR e revisão de código para trabalho em equipe eficaz.</li>`;
+            }
+
+            assessment += `</ul>`;
+
+            return assessment;
+        }
+
+        function generateDetailedQuestionReport(categories) {
+            let report = '';
+
+            Object.entries(categories).forEach(([key, category]) => {
+                if (category.details && category.details.length > 0) {
+                    const percentage = Math.round((category.correct / category.questions) * 100);
+                    const statusColor = percentage >= 75 ? '#10B981' : percentage >= 50 ? '#F59E0B' : '#EF4444';
+                    const statusIcon = percentage >= 75 ? '🟢' : percentage >= 50 ? '🟡' : '🔴';
+
+                    report += `
+                        <div style="margin-bottom: 20px; border: 1px solid #E5E7EB; border-radius: 8px; overflow: hidden;">
+                            <div style="background: ${statusColor}; color: white; padding: 12px; font-weight: bold;">
+                                ${statusIcon} ${category.name} - ${category.correct}/${category.questions} (${percentage}%)
+                            </div>
+                            <div style="padding: 15px; background: white;">
+                    `;
+
+                    category.details.forEach((detail, index) => {
+                        const icon = detail.correct ? '✅' : '❌';
+                        const textColor = detail.correct ? '#059669' : '#DC2626';
+
+                        report += `
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 10px; padding: 8px; border-radius: 5px; background: ${detail.correct ? '#F0FDF4' : '#FEF2F2'};">
+                                <span style="margin-right: 10px; font-size: 16px;">${icon}</span>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: bold; color: ${textColor}; margin-bottom: 2px;">
+                                        Questão ${detail.number}
+                                    </div>
+                                    <div style="color: #374151; font-size: 14px;">
+                                        ${detail.question}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    report += `
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            return report;
+        }
+
+        function generatePersonalizedRecommendations(categories) {
+            let recommendations = '<ul>';
+
+            Object.entries(categories).forEach(([key, category]) => {
+                const percentage = Math.round((category.correct / category.questions) * 100);
+
+                if (percentage < 50) {
+                    switch(key) {
+                        case 'conceitos':
+                            recommendations += '<li><strong>Conceitos Essenciais:</strong> Revisar por que Git é fundamental para QA. Praticar identificando situações onde controle de versão, branching e PRs são importantes.</li>';
+                            break;
+                        case 'comandos':
+                            recommendations += '<li><strong>Comandos Básicos:</strong> Criar um repositório de teste e praticar o fluxo completo: clone, branch, add, commit, push. Repetir até se tornar automático.</li>';
+                            break;
+                        case 'nomenclatura':
+                            recommendations += '<li><strong>Nomenclatura:</strong> Estudar exemplos de boas práticas de nomenclatura. Praticar criando nomes de branches e commits para diferentes cenários de teste.</li>';
+                            break;
+                        case 'pr':
+                            recommendations += '<li><strong>Pull Requests:</strong> Observar PRs reais em projetos open source. Praticar escrevendo descrições claras e fazendo revisões construtivas.</li>';
+                            break;
+                    }
+                } else if (percentage < 75) {
+                    switch(key) {
+                        case 'conceitos':
+                            recommendations += '<li><strong>Conceitos Essenciais:</strong> Aprofundar conhecimento lendo sobre Git workflows específicos para QA e automação de testes.</li>';
+                            break;
+                        case 'comandos':
+                            recommendations += '<li><strong>Comandos Básicos:</strong> Explorar comandos mais avançados como rebase, cherry-pick e stash para situações específicas.</li>';
+                            break;
+                        case 'nomenclatura':
+                            recommendations += '<li><strong>Nomenclatura:</strong> Implementar os padrões aprendidos em projetos reais e buscar feedback da equipe.</li>';
+                            break;
+                        case 'pr':
+                            recommendations += '<li><strong>Pull Requests:</strong> Participar mais ativamente de revisões de código e buscar mentoria de desenvolvedores seniores.</li>';
+                            break;
+                    }
+                }
+            });
+
+            // Recomendações gerais
+            const overallScore = Math.round((Object.values(categories).reduce((sum, cat) => sum + cat.correct, 0) / Object.values(categories).reduce((sum, cat) => sum + cat.questions, 0)) * 100);
+
+            if (overallScore >= 75) {
+                recommendations += '<li><strong>Próximo Nível:</strong> Considere estudar Git hooks, CI/CD integration e ferramentas avançadas de automação.</li>';
+                recommendations += '<li><strong>Liderança:</strong> Compartilhe conhecimento com a equipe e ajude a estabelecer padrões de Git na organização.</li>';
+            } else {
+                recommendations += '<li><strong>Prática Constante:</strong> Dedique 15-30 minutos diários praticando comandos Git em projetos pessoais.</li>';
+                recommendations += '<li><strong>Recursos Adicionais:</strong> Utilize os links fornecidos na seção de recursos para aprofundar conhecimentos.</li>';
+            }
+
+            recommendations += '</ul>';
+            return recommendations;
+        }
+
+        // Inicializar a apostila
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se já existe nome salvo
+            const savedName = localStorage.getItem('userName');
+            if (savedName) {
+                userName = savedName;
+                updateUserNameElements();
+                showPage('boas-vindas');
+            }
+
+            // Expandir primeiro capítulo por padrão
+            toggleChapter('chapter1');
+            updateActiveNavigation(currentPage);
+            updateProgress();
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f2482594b9f1a7',t:'MTc2MDU2MjQwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
