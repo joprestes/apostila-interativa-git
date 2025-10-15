@@ -1,0 +1,193 @@
+/* =========================================================
+   THEMES.CSS — Paleta de cores, temas e variações visuais
+   ========================================================= */
+
+/* ------------------------ */
+/* VARIÁVEIS DE TEMA BASE   */
+/* ------------------------ */
+:root {
+  /* Cores principais */
+  --color-primary: #2563eb;
+  --color-primary-dark: #1e40af;
+  --color-secondary: #4c1d95;
+  --color-accent: #9333ea;
+
+  /* Cores de feedback */
+  --color-success: #16a34a;
+  --color-warning: #facc15;
+  --color-error: #dc2626;
+  --color-info: #0ea5e9;
+
+  /* Cores neutras */
+  --color-bg: #f9fafb;
+  --color-surface: #ffffff;
+  --color-border: #e5e7eb;
+  --color-text: #111827;
+  --color-text-muted: #6b7280;
+
+  /* Gradientes */
+  --gradient-primary: linear-gradient(135deg, #2563eb, #4f46e5);
+  --gradient-secondary: linear-gradient(135deg, #4c1d95, #7c3aed);
+  --gradient-accent: linear-gradient(135deg, #9333ea, #c026d3);
+
+  /* Sombras e efeitos */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+  /* Transições */
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --transition-slow: 0.4s ease;
+}
+
+/* ------------------------ */
+/* TEMA CLARO (DEFAULT)     */
+/* ------------------------ */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color var(--transition-medium),
+              color var(--transition-medium);
+}
+
+.header,
+.sidebar {
+  background: var(--color-secondary);
+  color: #fff;
+}
+
+button,
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+  transition: background-color var(--transition-fast);
+}
+button:hover,
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+a {
+  color: var(--color-primary);
+  transition: color var(--transition-fast);
+}
+a:hover {
+  color: var(--color-primary-dark);
+}
+
+/* ------------------------ */
+/* TEMA ESCURO              */
+/* ------------------------ */
+.theme-dark {
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-border: #334155;
+  --color-text: #f8fafc;
+  --color-text-muted: #94a3b8;
+
+  --color-primary: #60a5fa;
+  --color-primary-dark: #3b82f6;
+  --color-secondary: #7c3aed;
+  --color-accent: #a855f7;
+
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.theme-dark .sidebar {
+  background-color: #1e1b4b;
+  color: #f8fafc;
+}
+.theme-dark .content {
+  background-color: var(--color-surface);
+}
+.theme-dark .card,
+.theme-dark .quiz {
+  background-color: #273549;
+  box-shadow: var(--shadow-sm);
+}
+.theme-dark .btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+.theme-dark .btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+.theme-dark a {
+  color: var(--color-accent);
+}
+.theme-dark a:hover {
+  color: var(--color-primary);
+}
+
+/* ------------------------ */
+/* GRADIENTES E VARIAÇÕES   */
+/* ------------------------ */
+.gradient-primary {
+  background: var(--gradient-primary);
+  color: #fff;
+}
+.gradient-secondary {
+  background: var(--gradient-secondary);
+  color: #fff;
+}
+.gradient-accent {
+  background: var(--gradient-accent);
+  color: #fff;
+}
+
+/* ------------------------ */
+/* ACENTOS E BORDAS         */
+/* ------------------------ */
+.border-accent {
+  border-color: var(--color-accent);
+}
+.text-accent {
+  color: var(--color-accent);
+}
+
+/* ------------------------ */
+/* ANIMAÇÕES DE TEMA        */
+/* ------------------------ */
+.theme-transition {
+  transition: background-color var(--transition-medium),
+              color var(--transition-medium),
+              border-color var(--transition-medium);
+}
+
+/* ------------------------ */
+/* ELEMENTOS ESPECIAIS (PROGRESS BAR, ALERTAS, ETC.) */
+/* ------------------------ */
+.progress-bar-fill {
+  background-color: var(--color-primary);
+  transition: width var(--transition-slow);
+}
+
+.alert-info {
+  background-color: rgba(14, 165, 233, 0.15);
+  color: var(--color-info);
+}
+.alert-success {
+  background-color: rgba(22, 163, 74, 0.15);
+  color: var(--color-success);
+}
+.alert-warning {
+  background-color: rgba(250, 204, 21, 0.15);
+  color: var(--color-warning);
+}
+.alert-error {
+  background-color: rgba(220, 38, 38, 0.15);
+  color: var(--color-error);
+}
+
+/* ------------------------ */
+/* RESPONSIVIDADE           */
+/* ------------------------ */
+@media (max-width: 768px) {
+  .gradient-primary,
+  .gradient-secondary,
+  .gradient-accent {
+    background-size: 200% auto;
+  }
+}

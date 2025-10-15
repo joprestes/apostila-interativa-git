@@ -1,0 +1,131 @@
+{
+  "chapters": [
+    {
+      "id": "intro",
+      "title": "Introdução ao Git e GitHub",
+      "description": "Conceitos básicos de controle de versão e por que usar o Git.",
+      "sections": [
+        {
+          "id": "intro-what-is-git",
+          "title": "O que é Git?",
+          "content": "content/intro/what-is-git.md"
+        },
+        {
+          "id": "intro-why-git",
+          "title": "Por que usar o Git?",
+          "content": "content/intro/why-git.md"
+        },
+        {
+          "id": "intro-install",
+          "title": "Instalação e Configuração",
+          "content": "content/intro/install.md"
+        }
+      ]
+    },
+    {
+      "id": "basics",
+      "title": "Fundamentos do Git",
+      "description": "Aprenda os comandos essenciais para versionar seus projetos.",
+      "sections": [
+        {
+          "id": "basics-init",
+          "title": "Iniciando um Repositório",
+          "content": "content/basics/init.md"
+        },
+        {
+          "id": "basics-status",
+          "title": "Status e Controle de Alterações",
+          "content": "content/basics/status.md"
+        },
+        {
+          "id": "basics-commit",
+          "title": "Commits e Histórico",
+          "content": "content/basics/commit.md"
+        }
+      ]
+    },
+    {
+      "id": "branching",
+      "title": "Branches e Fluxos de Trabalho",
+      "description": "Domine o trabalho em paralelo e a integração de código.",
+      "sections": [
+        {
+          "id": "branching-create",
+          "title": "Criando e Trocando de Branches",
+          "content": "content/branching/create.md"
+        },
+        {
+          "id": "branching-merge",
+          "title": "Fazendo Merge e Resolvendo Conflitos",
+          "content": "content/branching/merge.md"
+        },
+        {
+          "id": "branching-workflow",
+          "title": "Fluxos de Trabalho (Git Flow, Feature Branches)",
+          "content": "content/branching/workflow.md"
+        }
+      ]
+    },
+    {
+      "id": "remote",
+      "title": "Trabalhando com Repositórios Remotos",
+      "description": "Aprenda a conectar seu repositório local ao GitHub ou GitLab.",
+      "sections": [
+        {
+          "id": "remote-clone",
+          "title": "Clonando um Repositório",
+          "content": "content/remote/clone.md"
+        },
+        {
+          "id": "remote-push-pull",
+          "title": "Push, Pull e Fetch",
+          "content": "content/remote/push-pull.md"
+        },
+        {
+          "id": "remote-collab",
+          "title": "Colaboração e Pull Requests",
+          "content": "content/remote/collab.md"
+        }
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Comandos Avançados e Dicas",
+      "description": "Explore recursos avançados do Git.",
+      "sections": [
+        {
+          "id": "advanced-revert",
+          "title": "Revertendo Alterações",
+          "content": "content/advanced/revert.md"
+        },
+        {
+          "id": "advanced-stash",
+          "title": "Usando o Stash",
+          "content": "content/advanced/stash.md"
+        },
+        {
+          "id": "advanced-rebase",
+          "title": "Rebase: Reescrevendo o Histórico",
+          "content": "content/advanced/rebase.md"
+        }
+      ]
+    },
+    {
+      "id": "final",
+      "title": "Conclusão e Próximos Passos",
+      "description": "Encerramento e sugestões para aprofundamento.",
+      "sections": [
+        {
+          "id": "final-summary",
+          "title": "Resumo Geral",
+          "content": "content/final/summary.md"
+        },
+        {
+          "id": "final-next",
+          "title": "Próximos Passos",
+          "content": "content/final/next.md"
+        }
+      ]
+    }
+  ]
+}

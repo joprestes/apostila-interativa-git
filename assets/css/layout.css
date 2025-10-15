@@ -1,0 +1,250 @@
+/* =========================================================
+   LAYOUT.CSS — Estrutura principal da Apostila Interativa Git
+   ========================================================= */
+
+/* ------------------------ */
+/* ESTRUTURA GERAL          */
+/* ------------------------ */
+.container {
+  display: flex;
+  flex-direction: row;
+  max-width: 1200px;
+  height: 90vh;
+  margin: 40px auto;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+/* ------------------------ */
+/* SIDEBAR (MENU LATERAL)   */
+/* ------------------------ */
+.sidebar {
+  width: 280px;
+  background-color: #4c1d95;
+  color: #ffffff;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: width 0.3s ease;
+}
+
+/* Sidebar recolhida (opcional, via JS) */
+.sidebar.collapsed {
+  width: 80px;
+}
+
+/* Cabeçalho da sidebar */
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.sidebar-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f5f3ff;
+  margin-bottom: 6px;
+}
+.sidebar-header small {
+  color: #c4b5fd;
+  font-size: 0.9rem;
+}
+
+/* Conteúdo da sidebar (lista de capítulos, etc.) */
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+.sidebar-content::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+}
+
+/* Rodapé da sidebar */
+.sidebar-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #ddd6fe;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+}
+
+/* ------------------------ */
+/* CONTEÚDO PRINCIPAL       */
+/* ------------------------ */
+.content {
+  flex: 1;
+  padding: 32px 40px;
+  background: #f9fafb;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.content h2 {
+  color: #1e3a8a;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Página ativa (controlada via JS) */
+.page {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.page.active {
+  display: block;
+}
+
+/* Cabeçalho interno */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.page-header h2 {
+  margin: 0;
+  color: #1e3a8a;
+}
+.page-header .username {
+  font-weight: 600;
+  color: #4c1d95;
+}
+
+/* ------------------------ */
+/* SEÇÃO DE INTRODUÇÃO / BOAS-VINDAS */
+/* ------------------------ */
+.intro {
+  text-align: center;
+  padding: 40px 20px;
+}
+.intro h2 {
+  font-size: 1.8rem;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+.intro p {
+  font-size: 1rem;
+  color: #374151;
+  margin-bottom: 1.2rem;
+}
+.intro input {
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* ------------------------ */
+/* NAVEGAÇÃO ENTRE PÁGINAS  */
+/* ------------------------ */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+.nav-buttons button {
+  min-width: 120px;
+}
+
+/* ------------------------ */
+/* ELEMENTOS VISUAIS DE APOIO */
+/* ------------------------ */
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 1.5rem 0;
+}
+
+.highlight-box {
+  background: #eef2ff;
+  border-left: 5px solid #4f46e5;
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin: 1.5rem 0;
+  color: #312e81;
+}
+
+/* ------------------------ */
+/* ESTADOS DE CAPÍTULOS     */
+/* ------------------------ */
+.chapter-content {
+  display: none;
+  transition: all 0.3s ease-in-out;
+}
+.chapter-content.active {
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+/* ------------------------ */
+/* ANIMAÇÕES DO LAYOUT */
+/* ------------------------ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------ */
+/* RESPONSIVIDADE */
+/* ------------------------ */
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+    margin: 20px;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+  }
+
+  .sidebar-content {
+    display: none;
+  }
+
+  .content {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 10px;
+  }
+
+  .sidebar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-buttons button {
+    width: 100%;
+  }
+}
