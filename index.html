@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Apostila digital interativa sobre Git para profissionais de QA, com conteúdo teórico, quizzes e recomendações personalizadas.">
     <title>Apostila Digital Interativa - Git para QA</title>
     <style>
         body {
@@ -25,6 +26,24 @@
             min-height: 100%;
             box-shadow: 0 0 30px rgba(0,0,0,0.2);
             display: flex;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 20px;
+            background: #4C1D95;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: top 0.3s ease;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 20px;
         }
 
         .sidebar {
@@ -53,6 +72,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: bold;
+            border: none;
+            width: 100%;
+            color: inherit;
+            font-size: 16px;
+            text-align: left;
+            display: block;
         }
 
         .chapter-title:hover {
@@ -70,12 +95,24 @@
             display: none;
         }
 
+        .chapter-title:focus-visible,
+        .subchapter:focus-visible {
+            outline: 3px solid #C084FC;
+            outline-offset: 2px;
+        }
+
         .subchapter {
             padding: 8px 12px;
             cursor: pointer;
             border-radius: 5px;
             transition: background 0.3s ease;
             font-size: 14px;
+            background: none;
+            border: none;
+            color: inherit;
+            text-align: left;
+            width: 100%;
+            display: block;
         }
 
         .subchapter:hover {
@@ -161,6 +198,11 @@
         .quiz-option:hover {
             border-color: #8B5CF6;
             background: #F3E8FF;
+        }
+
+        .quiz-option:focus-visible {
+            outline: 3px solid #8B5CF6;
+            outline-offset: 2px;
         }
 
         .quiz-option.selected {
@@ -323,62 +365,64 @@
             }
         }
     </style>
+    </style>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Ir para o conteúdo principal</a>
     <div class="container">
-        <div class="sidebar">
+        <nav class="sidebar" aria-label="Sumário da apostila">
             <h2>📚 Git para QA</h2>
 
             <div class="chapter">
-                <div class="chapter-title" onclick="toggleChapter('chapter1')">
+                <button type="button" class="chapter-title" data-target="chapter1" aria-expanded="false" aria-controls="chapter1">
                     1. Conceitos Essenciais
-                </div>
+                </button>
                 <div class="subchapters" id="chapter1">
-                    <div class="subchapter" onclick="showPage('boas-vindas')">1.1 Introdução</div>
-                    <div class="subchapter" onclick="showPage('conceitos-essenciais')">1.2 Conceitos Essenciais</div>
-                    <div class="subchapter" onclick="showPage('quiz-conceitos')">1.3 Quiz - Conceitos</div>
+                    <button type="button" class="subchapter" data-page="boas-vindas">1.1 Introdução</button>
+                    <button type="button" class="subchapter" data-page="conceitos-essenciais">1.2 Conceitos Essenciais</button>
+                    <button type="button" class="subchapter" data-page="quiz-conceitos">1.3 Quiz - Conceitos</button>
                 </div>
             </div>
 
             <div class="chapter">
-                <div class="chapter-title" onclick="toggleChapter('chapter2')">
+                <button type="button" class="chapter-title" data-target="chapter2" aria-expanded="false" aria-controls="chapter2">
                     2. Comandos Básicos
-                </div>
+                </button>
                 <div class="subchapters" id="chapter2">
-                    <div class="subchapter" onclick="showPage('comandos-basicos')">2.1 Comandos Essenciais</div>
-                    <div class="subchapter" onclick="showPage('quiz-comandos')">2.2 Quiz - Comandos</div>
+                    <button type="button" class="subchapter" data-page="comandos-basicos">2.1 Comandos Essenciais</button>
+                    <button type="button" class="subchapter" data-page="quiz-comandos">2.2 Quiz - Comandos</button>
                 </div>
             </div>
 
             <div class="chapter">
-                <div class="chapter-title" onclick="toggleChapter('chapter3')">
+                <button type="button" class="chapter-title" data-target="chapter3" aria-expanded="false" aria-controls="chapter3">
                     3. Nomenclatura e Commits
-                </div>
+                </button>
                 <div class="subchapters" id="chapter3">
-                    <div class="subchapter" onclick="showPage('nomenclatura-branches')">3.1 Nomenclatura de Branches</div>
-                    <div class="subchapter" onclick="showPage('commits-semanticos')">3.2 Commits Semânticos</div>
-                    <div class="subchapter" onclick="showPage('quiz-nomenclatura')">3.3 Quiz - Nomenclatura</div>
+                    <button type="button" class="subchapter" data-page="nomenclatura-branches">3.1 Nomenclatura de Branches</button>
+                    <button type="button" class="subchapter" data-page="commits-semanticos">3.2 Commits Semânticos</button>
+                    <button type="button" class="subchapter" data-page="quiz-nomenclatura">3.3 Quiz - Nomenclatura</button>
                 </div>
             </div>
 
             <div class="chapter">
-                <div class="chapter-title" onclick="toggleChapter('chapter4')">
+                <button type="button" class="chapter-title" data-target="chapter4" aria-expanded="false" aria-controls="chapter4">
                     4. Pull Request e Revisão
-                </div>
+                </button>
                 <div class="subchapters" id="chapter4">
-                    <div class="subchapter" onclick="showPage('pull-request')">4.1 Pull Request</div>
-                    <div class="subchapter" onclick="showPage('revisao-codigo')">4.2 Revisão de Código</div>
-                    <div class="subchapter" onclick="showPage('quiz-pr')">4.3 Quiz - Pull Request</div>
+                    <button type="button" class="subchapter" data-page="pull-request">4.1 Pull Request</button>
+                    <button type="button" class="subchapter" data-page="revisao-codigo">4.2 Revisão de Código</button>
+                    <button type="button" class="subchapter" data-page="quiz-pr">4.3 Quiz - Pull Request</button>
                 </div>
             </div>
 
             <div class="chapter">
-                <div class="chapter-title" onclick="toggleChapter('chapter5')">
+                <button type="button" class="chapter-title" data-target="chapter5" aria-expanded="false" aria-controls="chapter5">
                     5. Quiz Final e Recursos
-                </div>
+                </button>
                 <div class="subchapters" id="chapter5">
-                    <div class="subchapter" onclick="showPage('quiz-final')">5.1 Quiz Geral</div>
-                    <div class="subchapter" onclick="showPage('recursos')">5.2 Recursos Adicionais</div>
+                    <button type="button" class="subchapter" data-page="quiz-final">5.1 Quiz Geral</button>
+                    <button type="button" class="subchapter" data-page="recursos">5.2 Recursos Adicionais</button>
                 </div>
             </div>
 
@@ -386,9 +430,9 @@
                 <div class="progress-fill" id="progressFill" style="width: 0%"></div>
             </div>
             <p style="text-align: center; font-size: 14px;">Progresso: <span id="progressText">0%</span></p>
-        </div>
+        </nav>
 
-        <div class="content">
+        <main id="main-content" class="content" tabindex="-1">
             <!-- Página Login -->
             <div class="page active" id="login-page">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh;">
@@ -565,12 +609,12 @@
                 <div class="quiz-container">
                     <div class="quiz-question">1. Por que o controle de versão é especialmente importante para QA?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 1)">Para conectar com a internet</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'conceitos', 1)">Para ter histórico das mudanças e poder fazer rollback em caso de erro</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 1)">Para criar documentação automaticamente</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 1)">Para executar testes mais rapidamente</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="1">Para conectar com a internet</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="conceitos" data-question="1">Para ter histórico das mudanças e poder fazer rollback em caso de erro</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="1">Para criar documentação automaticamente</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="1">Para executar testes mais rapidamente</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-conceitos-1" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-conceitos-1" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Muito bem, <span class="user-name-feedback">estudante</span>!</strong> O controle de versão permite que você mantenha um histórico completo de todas as mudanças nos seus scripts de automação. Se um teste quebrar após uma alteração, você pode facilmente voltar à versão anterior que funcionava, garantindo estabilidade nos testes.</div>
                         <div class="incorrect-answer">❌ <strong>Não foi dessa vez, <span class="user-name-feedback">estudante</span>.</strong> O controle de versão é fundamental para manter histórico das mudanças e permitir rollback seguro. Isso é especialmente importante em automação de testes, onde uma mudança pode quebrar vários cenários de teste. Continue estudando!</div>
                     </div>
@@ -579,12 +623,12 @@
                 <div class="quiz-container">
                     <div class="quiz-question">2. Qual é o principal benefício do branching para equipes de QA?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'conceitos', 2)">Facilita trabalho paralelo em diferentes funcionalidades e correções</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 2)">Torna os testes mais rápidos</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 2)">Reduz o tamanho dos arquivos</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 2)">Elimina a necessidade de documentação</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="conceitos" data-question="2">Facilita trabalho paralelo em diferentes funcionalidades e correções</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="2">Torna os testes mais rápidos</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="2">Reduz o tamanho dos arquivos</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="2">Elimina a necessidade de documentação</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-conceitos-2" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-conceitos-2" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Excelente, <span class="user-name-feedback">estudante</span>!</strong> O branching permite que diferentes QAs trabalhem simultaneamente sem interferir no trabalho uns dos outros. Por exemplo, um QA pode estar criando testes para uma nova feature enquanto outro corrige bugs em testes existentes, tudo em branches separadas.</div>
                         <div class="incorrect-answer">❌ <strong>Ops, <span class="user-name-feedback">estudante</span>!</strong> O principal benefício do branching é permitir trabalho paralelo. Isso significa que múltiplos QAs podem trabalhar em diferentes funcionalidades, correções ou melhorias simultaneamente, sem conflitos. Vamos revisar esse conceito!</div>
                     </div>
@@ -593,12 +637,12 @@
                 <div class="quiz-container">
                     <div class="quiz-question">3. Por que Pull Requests são importantes no contexto de QA?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 3)">Para acelerar o desenvolvimento</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 3)">Para reduzir o uso de memória</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'conceitos', 3)">Para garantir revisão e validação de qualidade antes do merge</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 3)">Para criar backups automáticos</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="3">Para acelerar o desenvolvimento</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="3">Para reduzir o uso de memória</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="conceitos" data-question="3">Para garantir revisão e validação de qualidade antes do merge</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="3">Para criar backups automáticos</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-conceitos-3" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-conceitos-3" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> Pull Requests garantem que todo código de teste passe por revisão antes de ser integrado. Isso mantém a qualidade dos testes, permite compartilhamento de conhecimento entre a equipe e evita que códigos com problemas sejam integrados ao repositório principal.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Pull Requests são essenciais para garantir qualidade através de revisão de código. Eles permitem que outros membros da equipe revisem, comentem e aprovem mudanças antes da integração.</div>
                     </div>
@@ -607,12 +651,12 @@
                 <div class="quiz-container">
                     <div class="quiz-question">4. Como commits semânticos ajudam especificamente profissionais de QA?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 4)">Tornam os testes mais rápidos</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'conceitos', 4)">Facilitam rastreabilidade e leitura do histórico do repositório</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 4)">Reduzem o tamanho dos arquivos de teste</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'conceitos', 4)">Eliminam a necessidade de documentação</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="4">Tornam os testes mais rápidos</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="conceitos" data-question="4">Facilitam rastreabilidade e leitura do histórico do repositório</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="4">Reduzem o tamanho dos arquivos de teste</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="conceitos" data-question="4">Eliminam a necessidade de documentação</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-conceitos-4" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-conceitos-4" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> Commits semânticos facilitam muito a vida do QA ao permitir entender rapidamente o que mudou no histórico. Quando um teste quebra, você pode facilmente identificar qual commit introduziu a mudança e entender o contexto da alteração.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Commits semânticos são importantes para rastreabilidade. Eles ajudam a entender rapidamente o que mudou, facilitando debugging, manutenção dos testes e integração com pipelines de CI/CD.</div>
                     </div>
@@ -750,12 +794,12 @@ git branch -a
                 <div class="quiz-container">
                     <div class="quiz-question">1. Qual comando você usa para criar uma nova branch e mudar para ela imediatamente?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 1)">git branch nova-branch</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'comandos', 1)">git checkout -b nova-branch</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 1)">git create nova-branch</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 1)">git switch nova-branch</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="1">git branch nova-branch</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="comandos" data-question="1">git checkout -b nova-branch</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="1">git create nova-branch</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="1">git switch nova-branch</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-comandos-1" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-comandos-1" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> O comando <code>git checkout -b nova-branch</code> é um atalho que cria uma nova branch e muda para ela imediatamente. Isso é muito útil no dia a dia, especialmente quando você precisa começar a trabalhar rapidamente em uma nova funcionalidade de teste.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O comando correto é <code>git checkout -b nova-branch</code>. Este comando combina a criação da branch com a mudança para ela, sendo muito mais eficiente que fazer os dois passos separadamente.</div>
                     </div>
@@ -764,12 +808,12 @@ git branch -a
                 <div class="quiz-container">
                     <div class="quiz-question">2. Você fez mudanças em vários arquivos de teste. Qual comando adiciona TODOS os arquivos modificados para o próximo commit?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 2)">git commit -a</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'comandos', 2)">git add .</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 2)">git push all</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 2)">git stage *</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="2">git commit -a</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="comandos" data-question="2">git add .</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="2">git push all</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="2">git stage *</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-comandos-2" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-comandos-2" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> O comando <code>git add .</code> adiciona todos os arquivos modificados, novos e deletados no diretório atual para a staging area. É muito útil quando você fez mudanças em múltiplos arquivos de teste e quer incluir todos no próximo commit.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O comando correto é <code>git add .</code> (com ponto). O ponto representa o diretório atual e adiciona todas as mudanças para a staging area, preparando-as para o commit.</div>
                     </div>
@@ -778,12 +822,12 @@ git branch -a
                 <div class="quiz-container">
                     <div class="quiz-question">3. Você commitou um teste que está com bug e precisa reverter. Qual comando cria um novo commit que desfaz as mudanças do commit anterior?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 3)">git undo</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 3)">git reset HEAD~1</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'comandos', 3)">git revert &lt;hash&gt;</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 3)">git delete &lt;hash&gt;</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="3">git undo</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="3">git reset HEAD~1</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="comandos" data-question="3">git revert &lt;hash&gt;</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="3">git delete &lt;hash&gt;</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-comandos-3" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-comandos-3" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> O comando <code>git revert &lt;hash&gt;</code> é a forma mais segura de desfazer um commit. Ele cria um novo commit que desfaz as mudanças do commit especificado, mantendo o histórico intacto. Isso é especialmente importante em ambientes de produção ou quando trabalhando em equipe.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O comando correto é <code>git revert &lt;hash&gt;</code>. Este comando é mais seguro que reset porque cria um novo commit desfazendo as mudanças, ao invés de apagar o histórico.</div>
                     </div>
@@ -792,12 +836,12 @@ git branch -a
                 <div class="quiz-container">
                     <div class="quiz-question">4. Antes de fazer merge da sua branch, você quer atualizar seu código local com as últimas mudanças da branch main. Qual comando usar?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 4)">git merge main</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'comandos', 4)">git pull origin main</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 4)">git fetch main</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'comandos', 4)">git update main</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="4">git merge main</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="comandos" data-question="4">git pull origin main</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="4">git fetch main</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="comandos" data-question="4">git update main</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-comandos-4" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-comandos-4" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> O comando <code>git pull origin main</code> baixa as últimas mudanças da branch main do repositório remoto e as integra na sua branch local. Isso é uma boa prática antes de fazer merge ou abrir um Pull Request, garantindo que seu código está atualizado.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O comando correto é <code>git pull origin main</code>. Este comando combina fetch (baixar) e merge (integrar) das mudanças da branch main remota para sua branch local atual.</div>
                     </div>
@@ -1014,12 +1058,12 @@ docs: atualizar README com instruções de execução local
                 <div class="quiz-container">
                     <div class="quiz-question">1. Qual é o formato correto para nomear uma branch que adiciona testes de validação de email?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 1)">Teste_Email_Validacao</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'nomenclatura', 1)">test/validacao-email</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 1)">TestEmailValidation</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 1)">test-validacao-email</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="1">Teste_Email_Validacao</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="nomenclatura" data-question="1">test/validacao-email</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="1">TestEmailValidation</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="1">test-validacao-email</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-nomenclatura-1" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-nomenclatura-1" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> O formato <code>test/validacao-email</code> segue o padrão recomendado: <code>&lt;tipo&gt;/&lt;descrição-curta&gt;</code>. Usa letras minúsculas, hífens para separar palavras, e o prefixo "test/" indica que é uma branch para testes.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O formato correto é <code>test/validacao-email</code>. Sempre use o padrão <code>&lt;tipo&gt;/&lt;descrição-curta&gt;</code> com letras minúsculas e hífens.</div>
                     </div>
@@ -1028,12 +1072,12 @@ docs: atualizar README com instruções de execução local
                 <div class="quiz-container">
                     <div class="quiz-question">2. Você está corrigindo um bug em um teste que estava falhando. Qual prefixo de branch usar?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 2)">test/</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'nomenclatura', 2)">fix/</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 2)">feature/</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 2)">chore/</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="2">test/</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="nomenclatura" data-question="2">fix/</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="2">feature/</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="2">chore/</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-nomenclatura-2" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-nomenclatura-2" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> O prefixo <code>fix/</code> é usado para correções de bugs ou ajustes em testes existentes. Por exemplo: <code>fix/ajuste-seletor-botao-login</code>. Isso deixa claro que você está corrigindo algo que já existia.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Para correção de bugs use <code>fix/</code>. O prefixo <code>test/</code> é para novos testes, <code>feature/</code> para novas funcionalidades, e <code>chore/</code> para configurações.</div>
                     </div>
@@ -1042,12 +1086,12 @@ docs: atualizar README com instruções de execução local
                 <div class="quiz-container">
                     <div class="quiz-question">3. Qual commit semântico está correto para adicionar novos cenários de teste de API?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 3)">feat: novos testes</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'nomenclatura', 3)">test: adicionar cenários de validação de API de usuários</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 3)">add: testes de API</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 3)">update: API tests</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="3">feat: novos testes</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="nomenclatura" data-question="3">test: adicionar cenários de validação de API de usuários</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="3">add: testes de API</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="3">update: API tests</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-nomenclatura-3" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-nomenclatura-3" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> O commit <code>test: adicionar cenários de validação de API de usuários</code> usa o prefixo correto "test:" para adição de testes e tem uma descrição clara e específica do que foi feito.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Para adição de testes use o prefixo <code>test:</code> seguido de uma descrição clara. Evite descrições genéricas como "novos testes" - seja específico sobre o que foi testado.</div>
                     </div>
@@ -1056,12 +1100,12 @@ docs: atualizar README com instruções de execução local
                 <div class="quiz-container">
                     <div class="quiz-question">4. Você atualizou a versão do Playwright no projeto. Qual tipo de commit usar?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 4)">feat: atualizar Playwright</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 4)">fix: atualizar Playwright</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'nomenclatura', 4)">chore: atualizar Playwright para versão 1.40</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'nomenclatura', 4)">test: atualizar Playwright</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="4">feat: atualizar Playwright</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="4">fix: atualizar Playwright</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="nomenclatura" data-question="4">chore: atualizar Playwright para versão 1.40</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="nomenclatura" data-question="4">test: atualizar Playwright</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-nomenclatura-4" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-nomenclatura-4" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> O prefixo <code>chore:</code> é usado para manutenção, configurações e atualizações de dependências. <code>chore: atualizar Playwright para versão 1.40</code> é específico e deixa claro que foi uma atualização de dependência.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Para atualizações de dependências e configurações use <code>chore:</code>. Este prefixo é específico para tarefas de manutenção que não alteram funcionalidades ou testes diretamente.</div>
                     </div>
@@ -1221,12 +1265,12 @@ npx playwright test
                 <div class="quiz-container">
                     <div class="quiz-question">1. Qual é o principal objetivo de um Pull Request?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 1)">Fazer backup do código</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'pr', 1)">Garantir revisão e validação de qualidade antes do merge</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 1)">Acelerar o desenvolvimento</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 1)">Reduzir o tamanho dos arquivos</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="1">Fazer backup do código</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="pr" data-question="1">Garantir revisão e validação de qualidade antes do merge</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="1">Acelerar o desenvolvimento</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="1">Reduzir o tamanho dos arquivos</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-pr-1" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-pr-1" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> O Pull Request é um mecanismo de controle de qualidade que garante que todo código seja revisado e validado antes de ser integrado ao repositório principal. Isso mantém a qualidade, permite compartilhamento de conhecimento e evita bugs em produção.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> O principal objetivo do PR é garantir qualidade através de revisão. Ele permite que outros membros da equipe revisem, testem e aprovem mudanças antes da integração ao código principal.</div>
                     </div>
@@ -1235,12 +1279,12 @@ npx playwright test
                 <div class="quiz-container">
                     <div class="quiz-question">2. Qual é uma boa prática ao abrir um Pull Request?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 2)">Incluir o máximo de mudanças possível em um PR</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'pr', 2)">Manter o PR pequeno e focado em uma mudança lógica</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 2)">Não adicionar descrição para economizar tempo</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 2)">Abrir o PR mesmo com testes falhando</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="2">Incluir o máximo de mudanças possível em um PR</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="pr" data-question="2">Manter o PR pequeno e focado em uma mudança lógica</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="2">Não adicionar descrição para economizar tempo</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="2">Abrir o PR mesmo com testes falhando</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-pr-2" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-pr-2" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> PRs pequenos e focados são mais fáceis de revisar, têm menos chance de conflitos e permitem feedback mais específico. Uma mudança lógica por PR facilita o entendimento e acelera o processo de revisão.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> PRs devem ser pequenos e focados. PRs grandes são difíceis de revisar, mais propensos a bugs e demoram mais para serem aprovados. Sempre inclua descrição clara e garanta que os testes estão passando.</div>
                     </div>
@@ -1249,12 +1293,12 @@ npx playwright test
                 <div class="quiz-container">
                     <div class="quiz-question">3. Ao revisar um PR de testes automatizados, o que é mais importante verificar?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 3)">Apenas se o código compila</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 3)">Somente a performance dos testes</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'pr', 3)">Clareza, cobertura de cenários, robustez dos seletores e padrões da equipe</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 3)">Apenas o número de linhas de código</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="3">Apenas se o código compila</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="3">Somente a performance dos testes</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="pr" data-question="3">Clareza, cobertura de cenários, robustez dos seletores e padrões da equipe</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="3">Apenas o número de linhas de código</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-pr-3" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-pr-3" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> Na revisão de testes automatizados é importante verificar se os testes são claros, cobrem cenários importantes, usam seletores robustos, têm assertions específicas e seguem os padrões da equipe. Isso garante testes de qualidade e manuteníveis.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> A revisão de testes deve ser abrangente, verificando clareza, cobertura, robustez dos seletores, qualidade das assertions e aderência aos padrões da equipe. Não se limite apenas a aspectos técnicos básicos.</div>
                     </div>
@@ -1263,12 +1307,12 @@ npx playwright test
                 <div class="quiz-container">
                     <div class="quiz-question">4. Como deve ser um comentário construtivo em uma revisão de PR?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 4)">"Isso está errado."</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, true, 'pr', 4)">"Seria interessante adicionar um timeout maior aqui, pois a API pode demorar mais em produção."</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 4)">"Não gostei."</div>
-                        <div class="quiz-option" onclick="selectQuizOption(this, false, 'pr', 4)">"Mude tudo."</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="4">"Isso está errado."</div>
+                        <div class="quiz-option" data-correct="true" data-quiz="pr" data-question="4">"Seria interessante adicionar um timeout maior aqui, pois a API pode demorar mais em produção."</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="4">"Não gostei."</div>
+                        <div class="quiz-option" data-correct="false" data-quiz="pr" data-question="4">"Mude tudo."</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-pr-4" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-pr-4" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> Um comentário construtivo é específico, explica o motivo da sugestão e oferece uma solução clara. Ele ajuda o autor a entender o problema e como resolvê-lo, promovendo aprendizado e melhoria contínua.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Comentários construtivos devem ser específicos, explicar o motivo e oferecer soluções. Evite comentários vagos ou negativos que não ajudam o autor a melhorar o código.</div>
                     </div>
@@ -1289,12 +1333,12 @@ npx playwright test
                 <div class="quiz-container">
                     <div class="quiz-question">1. Você precisa criar uma branch para adicionar testes de validação de CPF. Qual nome seguiria as melhores práticas?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 1)">TesteCPF</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, true, 1)">test/validacao-cpf</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 1)">feature/CPF_validation</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 1)">nova-branch-cpf</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="1">TesteCPF</div>
+                        <div class="quiz-option" data-final="true" data-correct="true" data-question="1">test/validacao-cpf</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="1">feature/CPF_validation</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="1">nova-branch-cpf</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-final-1" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-final-1" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> <code>test/validacao-cpf</code> segue o padrão <code>&lt;tipo&gt;/&lt;descrição-curta&gt;</code> com letras minúsculas, hífens e prefixo apropriado para testes.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Use o padrão <code>test/validacao-cpf</code> - sempre minúsculas, hífens e prefixo que indica o tipo de mudança.</div>
                     </div>
@@ -1303,12 +1347,12 @@ npx playwright test
                 <div class="quiz-container">
                     <div class="quiz-question">2. Qual sequência de comandos está correta para contribuir com um novo teste?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 2)">git commit → git add → git push</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, true, 2)">git checkout -b test/nova-validacao → git add . → git commit -m "test: adicionar validação" → git push origin test/nova-validacao</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 2)">git push → git add → git commit</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 2)">git add → git push → git commit</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="2">git commit → git add → git push</div>
+                        <div class="quiz-option" data-final="true" data-correct="true" data-question="2">git checkout -b test/nova-validacao → git add . → git commit -m "test: adicionar validação" → git push origin test/nova-validacao</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="2">git push → git add → git commit</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="2">git add → git push → git commit</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-final-2" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-final-2" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> Esta sequência segue o fluxo completo: criar branch, adicionar mudanças, fazer commit semântico e enviar para o repositório remoto.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> A sequência correta é: criar branch → add → commit → push. Sempre faça commit antes de push.</div>
                     </div>
@@ -1317,12 +1361,12 @@ npx playwright test
                 <div class="quiz-container">
                     <div class="quiz-question">3. Você corrigiu um bug em um teste que estava falhando. Qual commit semântico usar?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 3)">feat: corrigir teste</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, true, 3)">fix: corrigir timeout no teste de login</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 3)">test: bug corrigido</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 3)">update: teste funcionando</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="3">feat: corrigir teste</div>
+                        <div class="quiz-option" data-final="true" data-correct="true" data-question="3">fix: corrigir timeout no teste de login</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="3">test: bug corrigido</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="3">update: teste funcionando</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-final-3" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-final-3" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> <code>fix:</code> é o prefixo correto para correções, e a descrição é específica sobre o que foi corrigido.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Para correções use <code>fix:</code> seguido de descrição específica do que foi corrigido.</div>
                     </div>
@@ -1331,12 +1375,12 @@ npx playwright test
                 <div class="quiz-container">
                     <div class="quiz-question">4. Qual é a melhor prática ao abrir um Pull Request?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 4)">Incluir o máximo de mudanças possível</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 4)">Não adicionar descrição para economizar tempo</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, true, 4)">Manter focado, adicionar descrição clara e instruções de teste</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 4)">Abrir mesmo com testes falhando</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="4">Incluir o máximo de mudanças possível</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="4">Não adicionar descrição para economizar tempo</div>
+                        <div class="quiz-option" data-final="true" data-correct="true" data-question="4">Manter focado, adicionar descrição clara e instruções de teste</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="4">Abrir mesmo com testes falhando</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-final-4" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-final-4" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> PRs devem ser focados, ter descrição clara explicando as mudanças e incluir instruções de como testar.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> PRs devem ser pequenos, focados, com descrição clara e instruções de teste. Sempre garanta que os testes estão passando.</div>
                     </div>
@@ -1345,19 +1389,19 @@ npx playwright test
                 <div class="quiz-container">
                     <div class="quiz-question">5. Por que commits semânticos são especialmente úteis para QAs?</div>
                     <div class="quiz-options">
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 5)">Tornam os testes mais rápidos</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, true, 5)">Facilitam rastreabilidade e integração com pipelines de CI/CD</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 5)">Reduzem o tamanho dos arquivos</div>
-                        <div class="quiz-option" onclick="selectFinalQuizOption(this, false, 5)">Eliminam a necessidade de testes</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="5">Tornam os testes mais rápidos</div>
+                        <div class="quiz-option" data-final="true" data-correct="true" data-question="5">Facilitam rastreabilidade e integração com pipelines de CI/CD</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="5">Reduzem o tamanho dos arquivos</div>
+                        <div class="quiz-option" data-final="true" data-correct="false" data-question="5">Eliminam a necessidade de testes</div>
                     </div>
-                    <div class="quiz-feedback" id="feedback-final-5" style="display: none;">
+                    <div class="quiz-feedback" id="feedback-final-5" style="display: none;" role="status" aria-live="polite" aria-hidden="true">
                         <div class="correct-answer">✅ <strong>Correto!</strong> Commits semânticos facilitam rastreabilidade de mudanças, debugging e permitem que pipelines de CI/CD reajam adequadamente baseado no tipo de mudança.</div>
                         <div class="incorrect-answer">❌ <strong>Incorreto.</strong> Commits semânticos ajudam na rastreabilidade, debugging e automação de pipelines, não na performance ou tamanho dos arquivos.</div>
                     </div>
                 </div>
 
                 <button class="btn" onclick="calculateFinalQuizScore()" id="final-quiz-submit" style="margin-top: 20px;">Finalizar Quiz</button>
-                <div id="final-quiz-result" style="margin-top: 20px; padding: 20px; border-radius: 8px; display: none;"></div>
+                <div id="final-quiz-result" style="margin-top: 20px; padding: 20px; border-radius: 8px; display: none;" role="status" aria-live="polite" aria-hidden="true"></div>
 
                 <div class="navigation">
                     <button class="btn" onclick="showPage('quiz-pr')">← Anterior</button>
@@ -1427,7 +1471,7 @@ npx playwright test
                     <button class="btn" onclick="showPage('boas-vindas')">Recomeçar</button>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 
     <script>
@@ -1436,6 +1480,61 @@ npx playwright test
         let quizAnswers = {};
         let finalQuizAnswers = {};
         let userName = '';
+
+        function setupNavigation() {
+            document.querySelectorAll('.chapter-title').forEach(button => {
+                const target = button.dataset.target;
+                button.addEventListener('click', () => toggleChapter(target, button));
+            });
+
+            document.querySelectorAll('.subchapter').forEach(button => {
+                const page = button.dataset.page;
+                button.addEventListener('click', () => showPage(page));
+            });
+        }
+
+        function setupQuizzes() {
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.setAttribute('tabindex', '0');
+                option.setAttribute('role', 'button');
+                option.setAttribute('aria-pressed', 'false');
+            });
+
+            document.querySelectorAll('.quiz-options').forEach(container => {
+                const handleSelection = option => {
+                    if (option.dataset.final === 'true') {
+                        selectFinalQuizOption(option);
+                    } else {
+                        selectQuizOption(option);
+                    }
+                };
+
+                container.addEventListener('click', event => {
+                    const option = event.target.closest('.quiz-option');
+
+                    if (!option || !container.contains(option)) {
+                        return;
+                    }
+
+                    handleSelection(option);
+                });
+
+                container.addEventListener('keydown', event => {
+                    if (!['Enter', ' ', 'Spacebar'].includes(event.key)) {
+                        return;
+                    }
+
+                    const option = event.target.closest('.quiz-option');
+
+                    if (!option || !container.contains(option)) {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    handleSelection(option);
+                });
+            });
+        }
 
         function startApostila() {
             const nameInput = document.getElementById('userName');
@@ -1477,49 +1576,57 @@ npx playwright test
             });
         }
 
-        function toggleChapter(chapterId) {
+        function toggleChapter(chapterId, trigger) {
             const chapter = document.getElementById(chapterId);
-            const chapterTitle = chapter.previousElementSibling;
 
-            if (chapter.style.display === 'none' || !chapter.style.display) {
-                chapter.style.display = 'block';
-                chapterTitle.classList.add('active');
-            } else {
-                chapter.style.display = 'none';
-                chapterTitle.classList.remove('active');
+            if (!chapter) {
+                return;
+            }
+
+            const chapterButton = trigger || chapter.previousElementSibling;
+            const isExpanded = chapter.style.display === 'block';
+
+            chapter.style.display = isExpanded ? 'none' : 'block';
+
+            if (chapterButton) {
+                chapterButton.classList.toggle('active', !isExpanded);
+                chapterButton.setAttribute('aria-expanded', String(!isExpanded));
             }
         }
 
         function showPage(pageId) {
-            // Esconder página atual
-            document.getElementById(currentPage).classList.remove('active');
+            document.querySelectorAll('.page').forEach(page => {
+                const isActive = page.id === pageId;
+                page.classList.toggle('active', isActive);
+                page.setAttribute('aria-hidden', String(!isActive));
+            });
 
-            // Mostrar nova página
-            document.getElementById(pageId).classList.add('active');
-
-            // Atualizar página atual
             currentPage = pageId;
-
-            // Marcar como completada
             completedPages.add(pageId);
-
-            // Atualizar progresso
             updateProgress();
-
-            // Atualizar navegação ativa
             updateActiveNavigation(pageId);
+
+            const mainContent = document.getElementById('main-content');
+            if (mainContent) {
+                mainContent.scrollTop = 0;
+                mainContent.focus();
+            }
         }
 
         function updateActiveNavigation(pageId) {
-            // Remover classe active de todos os subchapters
             document.querySelectorAll('.subchapter').forEach(sub => {
-                sub.classList.remove('active');
-            });
+                const isActive = sub.dataset.page === pageId;
+                sub.classList.toggle('active', isActive);
 
-            // Adicionar classe active ao subchapter atual
-            document.querySelectorAll('.subchapter').forEach(sub => {
-                if (sub.onclick && sub.onclick.toString().includes(pageId)) {
-                    sub.classList.add('active');
+                if (isActive) {
+                    sub.setAttribute('aria-current', 'page');
+                    const chapter = sub.closest('.subchapters');
+
+                    if (chapter && chapter.style.display !== 'block') {
+                        toggleChapter(chapter.id, chapter.previousElementSibling);
+                    }
+                } else {
+                    sub.removeAttribute('aria-current');
                 }
             });
         }
@@ -1532,27 +1639,34 @@ npx playwright test
             document.getElementById('progressText').textContent = Math.round(progress) + '%';
         }
 
-        function selectQuizOption(option, isCorrect, quizType, questionNumber) {
+        function selectQuizOption(option) {
             const container = option.closest('.quiz-container');
             const options = container.querySelectorAll('.quiz-option');
             const feedbackElement = container.querySelector('.quiz-feedback');
+            const isCorrect = option.dataset.correct === 'true';
+            const quizType = option.dataset.quiz;
+            const questionNumber = option.dataset.question;
 
             // Remover seleções anteriores
             options.forEach(opt => {
                 opt.classList.remove('selected', 'correct', 'incorrect');
+                opt.setAttribute('aria-pressed', 'false');
             });
 
             // Marcar opção selecionada
             option.classList.add('selected');
+            option.setAttribute('aria-pressed', 'true');
 
             // Salvar resposta
-            const quizKey = `${quizType}-${questionNumber}`;
-            quizAnswers[quizKey] = isCorrect;
+            if (quizType && questionNumber) {
+                const quizKey = `${quizType}-${questionNumber}`;
+                quizAnswers[quizKey] = isCorrect;
+            }
 
             // Mostrar feedback após um breve delay
             setTimeout(() => {
                 options.forEach(opt => {
-                    const optIsCorrect = opt.onclick.toString().includes('true');
+                    const optIsCorrect = opt.dataset.correct === 'true';
                     if (optIsCorrect) {
                         opt.classList.add('correct');
                     } else if (opt.classList.contains('selected')) {
@@ -1565,6 +1679,7 @@ npx playwright test
                 const incorrectAnswer = feedbackElement.querySelector('.incorrect-answer');
 
                 feedbackElement.style.display = 'block';
+                feedbackElement.setAttribute('aria-hidden', 'false');
 
                 if (isCorrect) {
                     feedbackElement.className = 'quiz-feedback correct';
@@ -1578,26 +1693,32 @@ npx playwright test
             }, 500);
         }
 
-        function selectFinalQuizOption(option, isCorrect, questionNumber) {
+        function selectFinalQuizOption(option) {
             const container = option.closest('.quiz-container');
             const options = container.querySelectorAll('.quiz-option');
             const feedbackElement = container.querySelector('.quiz-feedback');
+            const isCorrect = option.dataset.correct === 'true';
+            const questionNumber = option.dataset.question;
 
             // Remover seleções anteriores
             options.forEach(opt => {
                 opt.classList.remove('selected', 'correct', 'incorrect');
+                opt.setAttribute('aria-pressed', 'false');
             });
 
             // Marcar opção selecionada
             option.classList.add('selected');
+            option.setAttribute('aria-pressed', 'true');
 
             // Salvar resposta
-            finalQuizAnswers[questionNumber] = isCorrect;
+            if (questionNumber) {
+                finalQuizAnswers[questionNumber] = isCorrect;
+            }
 
             // Mostrar feedback após um breve delay
             setTimeout(() => {
                 options.forEach(opt => {
-                    const optIsCorrect = opt.onclick.toString().includes('true');
+                    const optIsCorrect = opt.dataset.correct === 'true';
                     if (optIsCorrect) {
                         opt.classList.add('correct');
                     } else if (opt.classList.contains('selected')) {
@@ -1610,6 +1731,7 @@ npx playwright test
                 const incorrectAnswer = feedbackElement.querySelector('.incorrect-answer');
 
                 feedbackElement.style.display = 'block';
+                feedbackElement.setAttribute('aria-hidden', 'false');
 
                 if (isCorrect) {
                     feedbackElement.className = 'quiz-feedback correct';
@@ -1627,23 +1749,25 @@ npx playwright test
             const totalQuestions = 5;
             const correctAnswers = Object.values(finalQuizAnswers).filter(answer => answer === true).length;
             const score = (correctAnswers / totalQuestions) * 100;
+            const roundedScore = Math.round(score);
 
             const resultDiv = document.getElementById('final-quiz-result');
             resultDiv.style.display = 'block';
+            resultDiv.setAttribute('aria-hidden', 'false');
 
             let message = '';
             let bgColor = '';
 
             const userName = localStorage.getItem('userName') || 'Estudante';
 
-            if (score >= 80) {
-                message = `🎉 Parabéns, ${userName}! Você acertou ${correctAnswers} de ${totalQuestions} questões (${score}%). Você domina os conceitos de Git para QA!`;
+            if (roundedScore >= 80) {
+                message = `🎉 Parabéns, ${userName}! Você acertou ${correctAnswers} de ${totalQuestions} questões (${roundedScore}%). Você domina os conceitos de Git para QA!`;
                 bgColor = '#d4edda';
-            } else if (score >= 60) {
-                message = `👍 Bom trabalho, ${userName}! Você acertou ${correctAnswers} de ${totalQuestions} questões (${score}%). Continue praticando!`;
+            } else if (roundedScore >= 60) {
+                message = `👍 Bom trabalho, ${userName}! Você acertou ${correctAnswers} de ${totalQuestions} questões (${roundedScore}%). Continue praticando!`;
                 bgColor = '#fff3cd';
             } else {
-                message = `📚 Continue estudando, ${userName}! Você acertou ${correctAnswers} de ${totalQuestions} questões (${score}%). Revise os conceitos e tente novamente.`;
+                message = `📚 Continue estudando, ${userName}! Você acertou ${correctAnswers} de ${totalQuestions} questões (${roundedScore}%). Revise os conceitos e tente novamente.`;
                 bgColor = '#f8d7da';
             }
 
@@ -1655,6 +1779,8 @@ npx playwright test
             `;
             resultDiv.style.backgroundColor = bgColor;
             resultDiv.style.border = '1px solid #ccc';
+            resultDiv.setAttribute('tabindex', '-1');
+            resultDiv.focus();
 
             // Desabilitar botão
             document.getElementById('final-quiz-submit').disabled = true;
@@ -2026,20 +2152,30 @@ npx playwright test
         }
 
         // Inicializar a apostila
-        document.addEventListener('DOMContentLoaded', function() {
-            // Verificar se já existe nome salvo
+        document.addEventListener('DOMContentLoaded', () => {
+            setupNavigation();
+            setupQuizzes();
+
+            document.querySelectorAll('.page').forEach(page => {
+                const isActive = page.classList.contains('active');
+                page.setAttribute('aria-hidden', String(!isActive));
+            });
+
+            const firstChapterButton = document.querySelector('.chapter-title[data-target="chapter1"]');
+            if (firstChapterButton) {
+                toggleChapter('chapter1', firstChapterButton);
+            }
+
+            updateActiveNavigation(currentPage);
+            updateProgress();
+
             const savedName = localStorage.getItem('userName');
             if (savedName) {
                 userName = savedName;
                 updateUserNameElements();
                 showPage('boas-vindas');
             }
-
-            // Expandir primeiro capítulo por padrão
-            toggleChapter('chapter1');
-            updateActiveNavigation(currentPage);
-            updateProgress();
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f2482594b9f1a7',t:'MTc2MDU2MjQwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
