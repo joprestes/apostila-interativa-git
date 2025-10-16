@@ -897,6 +897,11 @@ git branch -a
                                 <td>chore/configurar-playwright</td>
                             </tr>
                             <tr>
+                                <td><strong>release/</strong></td>
+                                <td>Preparação e estabilização de uma versão para entrega</td>
+                                <td>release/2024-10-regressivo-mobile</td>
+                            </tr>
+                            <tr>
                                 <td><strong>docs/</strong></td>
                                 <td>Atualização de documentação</td>
                                 <td>docs/instrucoes-de-execucao</td>
@@ -922,6 +927,7 @@ test/validacao-email-invalido
 feature/automacao-checkout-completo
 fix/timeout-teste-api-pagamento
 chore/atualizar-selenium-webdriver
+release/2024-10-preparacao-regressivo-api
 docs/guia-execucao-testes-mobile
 
 # ❌ Exemplos ruins
@@ -941,7 +947,20 @@ teste123
 test/QA-123-validacao-login-api
 feature/QA-456-automacao-carrinho-compras
 fix/QA-789-corrigir-seletor-botao-submit
+release/QA-999-preparar-release-2-3-0
                     </div>
+                </div>
+
+                <div class="interactive-box">
+                    <h3>🚀 Branches de Release</h3>
+                    <p>Branches com prefixo <code>release/</code> consolidam tudo o que fará parte de uma versão específica. Assim que a branch é criada, congela-se a entrada de novas funcionalidades e o foco passa a ser estabilizar a entrega.</p>
+                    <ul>
+                        <li><strong>Quando criar:</strong> após selecionar o escopo da release e congelar o código em <code>main</code> (ou <code>develop</code>) para permitir testes aprofundados de regressão e homologação.</li>
+                        <li><strong>Nome recomendado:</strong> <code>release/&lt;versao&gt;-&lt;contexto-ou-epico&gt;</code> ou <code>release/&lt;aaaa-mm&gt;-&lt;produto-ou-time&gt;</code>, por exemplo <code>release/2.3.0-homologacao-app</code> ou <code>release/2024-10-regressivo-mobile</code>.</li>
+                        <li><strong>Checklist do QA:</strong> planejar baterias de testes completos, registrar evidências (planilhas, relatórios ou cards), acompanhar correções e validar novamente antes do merge.</li>
+                        <li><strong>Correções permitidas:</strong> apenas hotfixes e ajustes críticos entram na branch, preferencialmente vindos de branches <code>fix/</code> específicas e mergeadas por PR.</li>
+                        <li><strong>Encerramento:</strong> depois da aprovação, efetuar merge da release em <code>main</code> (criando a tag) e fazer o back-merge em <code>develop</code> para manter as linhas sincronizadas.</li>
+                    </ul>
                 </div>
 
                 <div class="navigation">
