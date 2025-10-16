@@ -1,28 +1,33 @@
-# 📚 Apostila Interativa Git para QA
+# 📚 Apostila Interativa Git para QA — Versão 2.0.0
 
 ![Status](https://img.shields.io/badge/status-online-success?style=flat-square)
 ![Git](https://img.shields.io/badge/Git-para_QA-8B5CF6?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
 
-Apostila digital **interativa** criada para revisão de **Git voltada a profissionais de QA**.  
-Inclui capítulos organizados, quizzes interativos, exemplos práticos e conteúdo totalmente navegável em HTML, CSS e JavaScript.
+Apostila digital **interativa** e **modularizada**, criada para revisão de **Git voltada a profissionais de QA**.  
+Agora com arquitetura 2.0 — modular em HTML, CSS e JavaScript, persistência segura e navegação otimizada.
 
 ---
 
 ## 🚀 Demonstração
 
-👉 **Acesse online:** [https://joprestes.github.io/apostila-git-qa](https://joprestes.github.io/apostila-interativa-git/)
+👉 **Acesse online:** [https://joprestes.github.io/apostila-interativa-git/](https://joprestes.github.io/apostila-interativa-git/)
 
 ---
 
-## 🧩 Estrutura do Projeto
+## 🧩 Arquitetura Modular
 
-```
-apostila-git-qa/
-├── index.html                  # Apostila interativa completa
-├── README.md                   # Documento atual
-└── assets/                     # (Opcional) imagens, ícones, etc.
-```
+| Módulo | Função |
+|---------|--------|
+| `assets/js/storage.js` | Persistência de dados (localStorage + fallback em memória) |
+| `assets/js/navigation.js` | Controle de páginas, capítulos e progresso |
+| `assets/js/quizzes.js` | Lógica dos quizzes, feedback e resultados |
+| `assets/js/main.js` | Orquestra inicialização e integra os módulos |
+| `assets/css/base.css` | Estilos globais e resets |
+| `assets/css/components.css` | Componentes visuais e interativos |
+| `assets/css/layout.css` | Estrutura de layout e containers |
+| `assets/css/themes.css` | Paleta de cores e temas visuais |
+| `chapters.json` | Estrutura e conteúdo da apostila |
 
 ---
 
@@ -30,7 +35,7 @@ apostila-git-qa/
 
 - **HTML5** — estrutura da apostila  
 - **CSS3** — estilização moderna e responsiva  
-- **JavaScript (ES6)** — quizzes e interatividade  
+- **JavaScript (ES6)** — interatividade e quizzes  
 - **Git** — controle de versão e aprendizado prático  
 
 ---
@@ -43,7 +48,7 @@ apostila-git-qa/
 4. Pull Requests e Revisão de Código  
 5. Quiz Final e Recursos Complementares  
 
-Cada capítulo possui **explicações teóricas**, **exemplos práticos** e **quizzes automáticos** com feedback em tempo real.
+Cada capítulo contém **explicações teóricas**, **exemplos práticos** e **quizzes automáticos** com feedback em tempo real.
 
 ---
 
@@ -56,7 +61,7 @@ Esta apostila foi criada para:
 
 ---
 
-## 🧪 Como Rodar Localmente
+## ⚙️ Execução Local
 
 ```bash
 # 1. Clone o repositório
@@ -71,7 +76,7 @@ start index.html     # (Windows)
 open index.html      # (macOS)
 ```
 
-Não é necessário servidor — o projeto é 100% estático.  
+Não é necessário servidor — o projeto é **100% estático**.
 
 ---
 
@@ -87,6 +92,28 @@ Não é necessário servidor — o projeto é 100% estático.
 
 ---
 
+## 🧱 Estrutura de Pastas
+
+```bash
+apostila-git-qa/
+├── index.html
+├── README.md
+├── chapters.json
+└── assets/
+    ├── css/
+    │   ├── base.css
+    │   ├── components.css
+    │   ├── layout.css
+    │   └── themes.css
+    └── js/
+        ├── storage.js
+        ├── navigation.js
+        ├── quizzes.js
+        └── main.js
+```
+
+---
+
 ## 🧭 Convenção de Branches
 
 | Tipo de mudança | Prefixo | Exemplo |
@@ -99,10 +126,21 @@ Não é necessário servidor — o projeto é 100% estático.
 
 ---
 
+## 🧾 Versionamento
+
+Segue o padrão [Conventional Commits](https://www.conventionalcommits.org/):  
+- `feat:` novas funcionalidades  
+- `fix:` correções  
+- `docs:` atualizações de documentação  
+- `style:` ajustes visuais ou de layout  
+- `refactor:` melhorias estruturais sem mudar comportamento  
+
+---
+
 ## 🪪 Licença
 
 Este projeto está licenciado sob a [MIT License](LICENSE).  
-Sinta-se à vontade para usar, modificar e compartilhar — citando a fonte.  
+Sinta-se à vontade para usar, modificar e compartilhar — citando a fonte.
 
 ---
 
