@@ -1,157 +1,110 @@
-# 📚 Apostila Interativa Git para QA — Versão 2.0.0
+# 📚 Apostila Digital Interativa - Git para QA
 
-![Status](https://img.shields.io/badge/status-online-success?style=flat-square)
-![Git](https://img.shields.io/badge/Git-para_QA-8B5CF6?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
-
-Apostila digital **interativa** e **modularizada**, criada para revisão de **Git voltada a profissionais de QA**.  
-Agora com arquitetura 2.0 — modular em HTML, CSS e JavaScript, persistência segura e navegação otimizada.
-
----
-
-## 🚀 Demonstração
-
-👉 **Acesse online:** [https://joprestes.github.io/apostila-interativa-git/](https://joprestes.github.io/apostila-interativa-git/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+![Status](https://img.shields.io/badge/Status-Ativo-success)
+![HTML5](https://img.shields.io/badge/HTML5-orange)
+![CSS3](https://img.shields.io/badge/CSS3-blue)
+![JavaScript](https://img.shields.io/badge/JavaScript-yellow)
+![VanillaJS](https://img.shields.io/badge/Vanilla_JS-pure-lightgrey)
+![Responsive](https://img.shields.io/badge/Responsivo-✔️-brightgreen)
 
 ---
 
-## 🧩 Arquitetura Modular
+## 🚀 Sobre o Projeto
 
-| Módulo | Função |
-|---------|--------|
-| `assets/js/storage.js` | Persistência de dados (localStorage + fallback em memória) |
-| `assets/js/navigation.js` | Controle de páginas, capítulos e progresso |
-| `assets/js/quizzes.js` | Lógica dos quizzes, feedback e resultados |
-| `assets/js/main.js` | Orquestra inicialização e integra os módulos |
-| `assets/css/base.css` | Estilos globais e resets |
-| `assets/css/components.css` | Componentes visuais e interativos |
-| `assets/css/layout.css` | Estrutura de layout e containers |
-| `assets/css/themes.css` | Paleta de cores e temas visuais |
-| `chapters.json` | Estrutura e conteúdo da apostila |
+A **Apostila Digital Interativa - Git para QA** é um material completo e autoexplicativo, desenvolvido em um único arquivo **HTML**.  
+O objetivo é ajudar profissionais de **Qualidade de Software (QA)** a **revisar, praticar e consolidar** seus conhecimentos em **Git**, com foco nas rotinas diárias de automação de testes e colaboração entre times de desenvolvimento.
+
+O projeto é **totalmente autocontido (monólito)** — não requer instalação, dependências externas ou servidor.  
+Basta abrir o arquivo `index.html` em um navegador moderno e começar a usar!
 
 ---
 
-## 💻 Tecnologias Utilizadas
+## ✨ Funcionalidades Principais
 
-- **HTML5** — estrutura da apostila  
-- **CSS3** — estilização moderna e responsiva  
-- **JavaScript (ES6)** — interatividade e quizzes  
-- **Git** — controle de versão e aprendizado prático  
+- **🧠 Experiência Personalizada:**  
+  O usuário insere seu nome e recebe feedbacks e relatórios sob medida.
 
----
+- **📖 Conteúdo Estruturado:**  
+  Organizado em **5 capítulos**, cobrindo desde conceitos essenciais até boas práticas de *Pull Requests*.
 
-## 📖 Conteúdo Abordado
+- **🧩 Quizzes Interativos:**  
+  Exercícios de múltipla escolha ao final de cada capítulo e um **quiz geral** para validar o aprendizado.
 
-1. Conceitos Essenciais de Git para QA  
-2. Comandos Básicos e Fluxos de Trabalho  
-3. Nomenclatura de Branches e Commits Semânticos  
-4. Pull Requests e Revisão de Código  
-5. Quiz Final e Recursos Complementares  
+- **⚡ Feedback Imediato:**  
+  Respostas corretas e incorretas são sinalizadas com **explicações detalhadas e personalizadas**.
 
-Cada capítulo contém **explicações teóricas**, **exemplos práticos** e **quizzes automáticos** com feedback em tempo real.
+- **📊 Acompanhamento de Progresso:**  
+  Uma **barra de progresso visual** mostra o avanço do usuário na apostila.
 
----
+- **📈 Relatório de Desempenho:**  
+  Geração automática de um **relatório final** com pontuação, análise por categoria e recomendações de estudo.
 
-## 🧠 Objetivo do Projeto
+- **📱 Design Responsivo:**  
+  Interface adaptável para **desktops, tablets e dispositivos móveis**.
 
-Esta apostila foi criada para:
-- Ajudar **QAs** a revisarem comandos e boas práticas do Git  
-- Fortalecer a integração entre **QA e Dev** via versionamento colaborativo  
-- Servir como **material de estudo ou treinamento interno**  
+- **💡 Zero Dependências:**  
+  Criado com **HTML, CSS e JavaScript puros (Vanilla JS)** — sem frameworks ou bibliotecas externas.
 
 ---
 
-## ⚙️ Execução Local
+## 🎯 Público-Alvo
 
-```bash
-# 1. Clone o repositório
-git clone https://github.com/joprestes/apostila-git-qa.git
+Profissionais de **Qualidade de Software** com conhecimento básico de Git, que buscam revisar e aprimorar práticas voltadas a:
 
-# 2. Acesse a pasta
-cd apostila-git-qa
-
-# 3. Abra o arquivo no navegador
-start index.html     # (Windows)
-# ou
-open index.html      # (macOS)
-```
-
-Não é necessário servidor — o projeto é **100% estático**.
+- Versionamento de scripts de automação  
+- Padrões de nomenclatura para *branches* e *commits*  
+- Melhores práticas de colaboração em equipe  
+- Integração com *pipelines* de **CI/CD**
 
 ---
 
-## 🌐 Publicação no GitHub Pages
+## 🛠️ Tecnologias Utilizadas
 
-1. Vá em **Settings → Pages**  
-2. Em **Source**, selecione `main` → `/ (root)`  
-3. Clique em **Save**  
-4. O site estará disponível em:
-   ```
-   https://joprestes.github.io/apostila-git-qa
-   ```
+O projeto foi desenvolvido utilizando apenas tecnologias web padrão:
 
----
-
-## 🧱 Estrutura de Pastas
-
-```bash
-apostila-git-qa/
-├── index.html
-├── README.md
-├── chapters.json
-└── assets/
-    ├── css/
-    │   ├── base.css
-    │   ├── components.css
-    │   ├── layout.css
-    │   └── themes.css
-    └── js/
-        ├── storage.js
-        ├── navigation.js
-        ├── quizzes.js
-        └── main.js
-```
+| Tecnologia | Descrição |
+|-------------|------------|
+| **HTML5** | Estrutura e conteúdo da apostila |
+| **CSS3** | Layout, responsividade e estilos (Flexbox, gradientes) |
+| **JavaScript (ES6+)** | Lógica dos quizzes, manipulação do DOM e uso de `localStorage` |
 
 ---
 
-## 🧭 Convenção de Branches
+## 💻 Como Utilizar
 
-| Tipo de mudança | Prefixo | Exemplo |
-|-----------------|----------|---------|
-| Nova funcionalidade | `feat/` | `feat/adicionar-quiz-final` |
-| Correção de bug | `fix/` | `fix/erro-navegacao` |
-| Documentação | `docs/` | `docs/add-readme` |
-| Estilo/estrutura visual | `style/` | `style/ajustes-layout` |
-| Refatoração | `refactor/` | `refactor/otimizar-js` |
+Nenhuma instalação é necessária.  
+Siga os passos abaixo:
 
----
-
-## 🧾 Versionamento
-
-Segue o padrão [Conventional Commits](https://www.conventionalcommits.org/):  
-- `feat:` novas funcionalidades  
-- `fix:` correções  
-- `docs:` atualizações de documentação  
-- `style:` ajustes visuais ou de layout  
-- `refactor:` melhorias estruturais sem mudar comportamento  
+1. Faça o **clone** ou **download** deste repositório.  
+2. Navegue até a pasta do projeto.  
+3. Abra o arquivo `index.html` em um navegador moderno (Chrome, Firefox, Edge etc.).  
+4. E pronto — a apostila interativa estará pronta para uso!
 
 ---
 
-## 🪪 Licença
+## 👩‍💻 Autoria e Desenvolvimento
 
-Este projeto está licenciado sob a [MIT License](LICENSE).  
-Sinta-se à vontade para usar, modificar e compartilhar — citando a fonte.
+Desenvolvido com 💜 por **Joelma Prestes Ferreira**
 
----
-
-## ✨ Autora e Desenvolvimento
-
-Desenvolvido por **Joelma Prestes Ferreira** 💜  
-
-🔗 **LinkedIn:** [linkedin.com/in/joprestes84](https://www.linkedin.com/in/joprestes84/)  
-📝 **Medium:** [medium.com/@joprestes](https://medium.com/@joprestes)  
-💻 **GitHub:** [github.com/joprestes](https://github.com/joprestes)
+- 🔗 [LinkedIn](https://linkedin.com/in/joprestes84)  
+- 📝 [Medium](https://medium.com/@joprestes)  
+- 💻 [GitHub](https://github.com/joprestes)
 
 ---
 
-> 💡 *"Aprender Git é essencial — especialmente para quem garante a qualidade do código."*
+## 📄 Licença
+
+Distribuído sob a **licença MIT**.  
+Consulte o arquivo [`LICENSE`](./LICENSE) para mais detalhes.
+
+---
+
+## 🤝 Contribuindo (Opcional)
+
+Contribuições são muito bem-vindas!  
+Sinta-se à vontade para:
+
+- Abrir **issues** com sugestões ou correções  
+- Enviar um **pull request** com melhorias  
+- Compartilhar feedbacks sobre usabilidade e conteúdo  
